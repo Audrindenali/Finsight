@@ -7,6 +7,8 @@
 
 import SwiftUI
 struct WelcomeView: View {
+    @State private var isShowMainView = false
+    
     var body: some View {
         GeometryReader { screen in
             VStack(alignment: .leading) {
@@ -23,16 +25,23 @@ struct WelcomeView: View {
                     .font(.body)
                     .padding(.all, 24)
                 
-                Button {
-                    print("Clicked")
-                } label: {
-                    Text("Continue")
-                        .foregroundColor(.white)
+                HStack {
+                    Spacer()
+                    Button {
+                        isShowMainView = true
+                    } label: {
+                        Text("Continue")
+                            .foregroundColor(.white)
+                    }
+                    .padding(.horizontal, 20)
+                    .padding(.vertical, 10)
+                    .background(.red)
+                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                    Spacer()
                 }
-                .padding(.horizontal, 20)
-                .padding(.vertical, 10)
-                .background(.red)
-                .clipShape(RoundedRectangle(cornerRadius: 10))
+                .fullScreenCover(isPresented: $isShowMainView) {
+                    MainView()
+                }
             }
         }.ignoresSafeArea(edges: .top)
     }
