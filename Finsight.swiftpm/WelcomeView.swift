@@ -15,15 +15,21 @@ struct WelcomeView: View {
                 Image("welcome_background")
                     .resizable()
                     .aspectRatio(contentMode: .fill)
-                    .frame(maxHeight: screen.size.height/2)
+                    .frame(maxHeight: screen.size.height / 2)
                     
-                Text("Simple solution for your budget")
-                    .font(.system(.title).weight(.bold))
-                    .padding(.all, 24)
+                
+                Spacer()
+                
+                Text("Simple solution for your budget.")
+                    .font(.system(.largeTitle).weight(.bold))
+                    .foregroundColor(.mainColor)
+                    .padding(.horizontal, 28)
+                    .padding(.bottom, 16)
                 
                 Text("Counter and distribute the income correctly!")
-                    .font(.body)
-                    .padding(.all, 24)
+                    .font(.title3)
+                    .padding(.horizontal, 28)
+                    .padding(.bottom, 32)
                 
                 HStack {
                     Spacer()
@@ -32,11 +38,13 @@ struct WelcomeView: View {
                     } label: {
                         Text("Continue")
                             .foregroundColor(.white)
+                            .padding(.horizontal, (50))
+                            .padding(.vertical, 5)
                     }
-                    .padding(.horizontal, 20)
-                    .padding(.vertical, 10)
-                    .background(.red)
-                    .clipShape(RoundedRectangle(cornerRadius: 10))
+
+                    .buttonStyle(.borderedProminent)
+                    .tint(.mainColor)
+                    .clipShape(RoundedRectangle(cornerRadius: 4))
                     Spacer()
                 }
                 .fullScreenCover(isPresented: $isShowMainView) {
