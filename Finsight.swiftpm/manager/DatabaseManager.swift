@@ -8,12 +8,6 @@
 import Foundation
 import RealmSwift
 
-//@Persisted(primaryKey: true) var _id: String
-//@Persisted var tr_category: String = ""
-//@Persisted var tr_amount: Double = 0
-//@Persisted var tr_date: Date = Date()
-//@Persisted var tr_description : String = ""
-
 class DatabaseManager {
     static let shared = DatabaseManager()
     
@@ -46,6 +40,6 @@ class DatabaseManager {
         
         let dataTransaction = realm.objects(TransactionEntity.self)
         
-        return dataTransaction.makeIterator { $0 }
+        return dataTransaction.map { $0 }
     }
 }

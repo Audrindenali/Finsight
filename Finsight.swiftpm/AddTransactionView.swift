@@ -9,7 +9,10 @@ import SwiftUI
 
 
 struct AddTransactionView: View {
-    @State private var nominal: String = "Rp0"
+    @EnvironmentObject var transactionViewModel: TransactionViewModel
+    
+    
+    @State private var nominal: String = ""
     @State private var categorySelection: String = "Investment"
     let categories = ["Investment", "School", "Shopping", "Food"]
     
@@ -57,6 +60,7 @@ struct AddTransactionView: View {
                 TextField("Data", text: $date)
                 
                 Button {
+                    transactionViewModel.saveTransaction(tr_category: self.categorySelection, tr_amount: Double(nominal) ?? 0, tr_date: Date(), tr_description: description)
                 } label: {
                     Text("Continue")
                         .foregroundColor(.white)
@@ -65,8 +69,10 @@ struct AddTransactionView: View {
                 .padding(.vertical, 10)
                 .background(.red)
                 .clipShape(RoundedRectangle(cornerRadius: 10))
-                
-                
+            }
+            .onAppear {
+                transactionViewModel.fetchTransactions()
+                print(transactionViewModel.transactions)
             }
         }
     }
