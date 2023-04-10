@@ -8,7 +8,7 @@ struct MyApp: App {
     var body: some Scene {
         WindowGroup {
             NavigationView {
-                AddTransactionView()
+                MainView()
             }.environmentObject(transactionViewModel)
         }
     }

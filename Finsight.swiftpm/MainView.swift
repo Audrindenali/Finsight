@@ -6,10 +6,58 @@
 //
 
 import SwiftUI
+//
+//MainTabEntity(image: "house.fill", title: "Home"),
+//MainTabEntity(image: "arrow.left.arrow.right", title: "Transaction"),
+//MainTabEntity(image: "chart.pie.fill", title: "Statistics"),
+//MainTabEntity(image: "person.fill", title: "Profile"),
 
 struct MainView: View {
+    @State var selectedTab: String = "home"
+    
+    init() {
+        UITabBar.appearance().isHidden = true
+    }
+    
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            TabView(selection: $selectedTab) {
+                HomeView()
+                    .tag("home")
+//                    .tabItem {
+//                        Label("Home", systemImage: "house.fill")
+//                    }
+                
+                TransactionView()
+                    .tag("transaction")
+//                    .tabItem {
+//                        Label("Transaction", systemImage: "arrow.left.arrow.right")
+//                    }
+                
+                AddTransactionView()
+                    .tag("add")
+//                    .tabItem {
+//                        Label("Add", systemImage: "plus")
+//                    }
+                
+                StatisticsView()
+                    .tag("statistics")
+//                    .tabItem {
+//                        Label("Statisctics", systemImage: "chart.pie.fill")
+//                    }
+                
+                ProfileView()
+                    .tag("profile")
+//                    .tabItem {
+//                        Label("Profile", systemImage: "person.fill")
+//                    }
+            }
+            
+            CustomTabBar(selectedTab: $selectedTab)
+            
+        }
+        .ignoresSafeArea(edges: .bottom)
     }
 }
 
