@@ -17,7 +17,6 @@ struct WelcomeView: View {
                     .aspectRatio(contentMode: .fill)
                     .frame(maxHeight: screen.size.height / 2)
                     
-                
                 Spacer()
                 
                 Text("Simple solution for your budget.")
