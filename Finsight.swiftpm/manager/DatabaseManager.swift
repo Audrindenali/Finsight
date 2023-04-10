@@ -40,4 +40,12 @@ class DatabaseManager {
             print(error.localizedDescription)
         }
     }
+    
+    func readTransactions() -> [TransactionEntity]{
+        let realm = try! Realm()
+        
+        let dataTransaction = realm.objects(TransactionEntity.self)
+        
+        return dataTransaction.makeIterator { $0 }
+    }
 }
