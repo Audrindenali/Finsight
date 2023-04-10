@@ -13,67 +13,153 @@ struct AddTransactionView: View {
     
     
     @State private var nominal: String = ""
-    @State private var categorySelection: String = "Investment"
+    @State private var categorySelection: String = ""
     let categories = ["Investment", "School", "Shopping", "Food"]
     
     @State private var description: String = ""
     @State private var isIncome = true
-    @State private var date: String = ""
+    @State private var dateSelection: String = ""
+
     
     var body: some View {
         GeometryReader { screen in
-            VStack {
-                Text("How Much?")
-                TextField("Enter the nominal", text: $nominal)
-                Picker("Select Category", selection: $categorySelection) {
-                    ForEach(categories, id: \.self) {
-                        Text($0)
-                    }
-                }.pickerStyle(.menu)
+            ZStack {
+                Color.mainColor.ignoresSafeArea()
                 
-                TextField("Description", text: $description)
-                
-                HStack {
-                    Button {
-                        isIncome = true
-                    } label: {
-                        Text("Income")
-                            .foregroundColor(.white)
-                    }
-                    .padding(.horizontal, 20)
-                    .padding(.vertical, 5)
-                    .background(isIncome ? .red : .gray)
-                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                VStack(alignment: .leading) {
+                    Text("How Much?")
+                        .font(.system(.title2))
+                        .foregroundColor(.mainText)
+                        .bold()
                     
-                    Button {
-                        isIncome = false
-                    } label: {
-                        Text("Expense")
-                            .foregroundColor(.white)
+                    TextField("Enter the nominal", text: $nominal)
+                        .font(.system(.largeTitle).weight(.bold))
+                        .foregroundColor(.mainText)
+                        .padding(.bottom, 16)
+                    
+                    
+                    VStack {
+                        Menu {
+                            Picker(selection: $categorySelection) {
+                                ForEach(categories, id: \.self) {
+                                    Text($0)
+                                }
+                            } label: {
+                                Text("Category")
+                                .font(.title3)
+                                .foregroundColor(categorySelection.isEmpty ? .placeHolderText : .black)
+                            }
+                                
+                        } label: {
+                            HStack {
+                                Text(categorySelection.isEmpty ? "Select Category" : categorySelection)
+                                    .font(.title3)
+                                
+                                Spacer()
+                                
+                                Image(systemName: "chevron.forward")
+                                    .font(.system(.title3))
+                            }
+                        }
+                        .foregroundColor(categorySelection.isEmpty ? .placeHolderText : .black)
+                        .padding(.all, 16)
+                        .overlay {
+                            RoundedRectangle(cornerRadius: 16)
+                                .stroke(.black)
+                        }
+                        .padding(.top, 32)
+                        
+                        
+                        TextField("Description", text: $description)
+                            .font(.system(.title3))
+                            .padding(.all, 16)
+                            
+                            .overlay {
+                                RoundedRectangle(cornerRadius: 16)
+                                    .stroke(.black)
+                            }
+                            .padding(.top, 32)
+                            
+                        
+                        HStack {
+                            Button {
+                                withAnimation {
+                                    isIncome = true
+                                }
+                            } label: {
+                                Text("Income")
+                                    .foregroundColor(.white)
+                            }
+                            .buttonStyle(.borderedProminent)
+                            .padding(.horizontal, 20)
+                            .padding(.vertical, 5)
+                            .tint(isIncome ? .mainColor : .gray)
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                            
+                            Button {
+                                isIncome = false
+                            } label: {
+                                Text("Expense")
+                                    .foregroundColor(.white)
+                            }
+                            .buttonStyle(.borderedProminent)
+                            .padding(.horizontal, 20)
+                            .padding(.vertical, 5)
+                            .tint(!isIncome ? .mainColor : .gray)
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                        }
+                        .padding(.top, 16)
+                        
+                        Button(action: {}, label: {
+                            HStack {
+                                Text("Pick your date")
+                                    .font(.system(.title3))
+                                    .padding(.all, 16)
+                                    .foregroundColor(dateSelection.isEmpty ? .placeHolderText : .black)
+                                    
+                                Spacer()
+                                
+                                Image(systemName: "chevron.forward")
+                                    .font(.system(.title3))
+                                    .padding(.trailing, 16)
+                                    
+                            }
+                        })
+                        .overlay {
+                            RoundedRectangle(cornerRadius: 16)
+                                .stroke(.black)
+                        }
+                        .foregroundColor(dateSelection.isEmpty ? .placeHolderText : .black)
+                        .padding(.top, 16)
+                        
+                        Spacer()
+                        
+                        Button {
+                            transactionViewModel.saveTransaction(tr_category: self.categorySelection, tr_amount: Double(nominal) ?? 0, tr_date: Date(), tr_description: description)
+                        } label: {
+                            Text("Continue")
+                                .font(.system(.title3))
+                                .foregroundColor(.white)
+                                .frame(maxWidth: .infinity, maxHeight: 60)
+                        }
+                        .buttonStyle(.borderedProminent)
+                        .tint(.mainColor)
+                        .clipShape(RoundedRectangle(cornerRadius: 18))
+                        .padding(.top, 16)
+                        
+                        Spacer()
                     }
-                    .padding(.horizontal, 20)
-                    .padding(.vertical, 5)
-                    .background(!isIncome ? .red : .gray)
-                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                    .padding(.all, 16)
+                    .background(Color.white)
+                    .cornerRadius(56, corners: [.topLeft, .topRight])
                 }
-                
-                TextField("Data", text: $date)
-                
-                Button {
-                    transactionViewModel.saveTransaction(tr_category: self.categorySelection, tr_amount: Double(nominal) ?? 0, tr_date: Date(), tr_description: description)
-                } label: {
-                    Text("Continue")
-                        .foregroundColor(.white)
-                }
-                .padding(.horizontal, 20)
-                .padding(.vertical, 10)
-                .background(.red)
-                .clipShape(RoundedRectangle(cornerRadius: 10))
-            }
-            .onAppear {
-                transactionViewModel.fetchTransactions()
-                print(transactionViewModel.transactions)
-            }
+                .ignoresSafeArea(edges: .bottom)
+                .padding(.all, 16)
+            } .ignoresSafeArea(edges: .bottom)
+           
+            
+            
+            
         }
     }
 }

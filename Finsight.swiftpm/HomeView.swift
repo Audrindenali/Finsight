@@ -16,6 +16,7 @@ struct HomeView: View {
             VStack {
                 ZStack {
                     Color.mainColor
+                        .cornerRadius(32, corners: [.bottomLeft, .bottomRight])
                     
                     VStack {
                         HStack {
@@ -129,6 +130,7 @@ struct HomeView: View {
                 }
                 .pickerStyle(.segmented)
                 .padding(.horizontal, 16)
+                .padding(.top, 32)
                 
                 HStack {
                     Text("Recent Transaction")
