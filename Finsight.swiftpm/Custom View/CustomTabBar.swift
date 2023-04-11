@@ -10,6 +10,7 @@ import SwiftUI
 
 struct CustomTabBar: View {
     @Binding var selectedTab: String
+    @Binding var showAddTransaction: Bool
     @Namespace var animation
     
     var body: some View {
@@ -18,9 +19,8 @@ struct CustomTabBar: View {
             TabBarButton(animation: animation, title: "Home", image: "house.fill", tag: "home", selectedTab: $selectedTab)
             
             TabBarButton(animation: animation, title: "Transaction", image: "arrow.left.arrow.right", tag: "transaction", selectedTab: $selectedTab)
-            
-            
-            Button(action: {}, label: {
+        
+            NavigationLink(destination: AddTransactionView(),isActive: $showAddTransaction) {
                 Image(systemName: "plus")
                     .font(.title2)
                     .foregroundColor(.white)
@@ -29,9 +29,9 @@ struct CustomTabBar: View {
                     .clipShape(Circle())
                     .shadow(color: Color.black.opacity(0.05), radius: 5, x: 5, y:5)
                     .shadow(color: Color.black.opacity(0.05), radius: 5, x: -5, y:-5)
-                
-            })
+            }
             .offset(y: -30)
+            
             
             TabBarButton(animation: animation, title: "Statistics", image: "chart.pie.fill", tag: "statistics", selectedTab: $selectedTab)
             

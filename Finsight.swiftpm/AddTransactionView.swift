@@ -10,6 +10,7 @@ import SwiftUI
 
 struct AddTransactionView: View {
     @EnvironmentObject var transactionViewModel: TransactionViewModel
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
     
     @State private var amountSelection: String = ""
@@ -124,6 +125,8 @@ struct AddTransactionView: View {
                         Button {
                             if validateField() {
                                 transactionViewModel.saveTransaction(tr_category: categorySelection, tr_amount: Double(amountSelection) ?? 0, tr_date: dateSelection, tr_description: descriptionSelection)
+                                
+                                presentationMode.wrappedValue.dismiss()
                             } else {
                                 print("Isi dahulu semua field")
                             }

@@ -14,6 +14,7 @@ import SwiftUI
 
 struct MainView: View {
     @State var selectedTab: String = "home"
+    @State var showAddTransaction = false
     
     init() {
         UITabBar.appearance().isHidden = true
@@ -41,12 +42,6 @@ struct MainView: View {
 //                        Label("Add", systemImage: "plus")
 //                    }
                 
-                StatisticsView()
-                    .tag("statistics")
-//                    .tabItem {
-//                        Label("Statisctics", systemImage: "chart.pie.fill")
-//                    }
-                
                 ProfileView()
                     .tag("profile")
 //                    .tabItem {
@@ -54,7 +49,7 @@ struct MainView: View {
 //                    }
             }
             
-            CustomTabBar(selectedTab: $selectedTab)
+            CustomTabBar(selectedTab: $selectedTab, showAddTransaction: $showAddTransaction)
             
         }
         .ignoresSafeArea(edges: .bottom)

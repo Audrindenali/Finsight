@@ -39,6 +39,8 @@ class DatabaseManager {
         let realm = try! Realm()
         
         let dataTransaction = realm.objects(TransactionEntity.self)
+            .sorted(byKeyPath: "tr_date", ascending: false)
+        
         
         return dataTransaction.map { $0 }
     }

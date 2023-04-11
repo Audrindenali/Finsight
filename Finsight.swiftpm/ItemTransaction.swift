@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ItemTransaction: View {
     var cashFlowType: String
+    var category: String
     var amount: String
     
     var body: some View {
@@ -29,7 +30,7 @@ struct ItemTransaction: View {
             
             Spacer()
             
-            Text(cashFlowType)
+            Text(category)
                 .font(.body)
         }
         .padding(.all, 8)
@@ -41,6 +42,6 @@ struct ItemTransaction: View {
 
 struct ItemTransaction_Previews: PreviewProvider {
     static var previews: some View {
-        ItemTransaction(cashFlowType: "Income", amount: "Rp10.000.000")
+        ItemTransaction(cashFlowType: "Income", category: "Investment", amount: "Rp10.000.000")
     }
 }

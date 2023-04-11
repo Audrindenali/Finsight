@@ -142,7 +142,7 @@ struct HomeView: View {
                 
                 ScrollView {
                     ForEach(transactionViewModel.transactions, id: \._id){ transaction in
-                        ItemTransaction(cashFlowType: "Income", amount: "\(transaction.tr_amount)")
+                        ItemTransaction(cashFlowType: "Income", category: transaction.tr_category, amount: "\(transaction.tr_amount)")
                     }
                 }
             }
