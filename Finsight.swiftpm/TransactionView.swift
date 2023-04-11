@@ -22,14 +22,17 @@ struct TransactionView: View {
                             Button(action: {}) {
                                 HStack {
                                     Image(systemName: "chevron.down")
+                                        .font(.system(.title3))
+                                        .foregroundColor(.mainText)
                                     
                                     Text("Month")
                                         .font(.system(.title3))
+                                        .foregroundColor(.mainText)
                                 }
                                 .padding(.all, 12)
                                 .overlay {
                                     Capsule()
-                                        .stroke(.black)
+                                        .stroke(Color.mainText)
                                 }
                             }
                             .padding(.all, 8)
@@ -42,35 +45,9 @@ struct TransactionView: View {
                 
                 ScrollView {
                     ForEach(1...20, id: \.self){ _ in
-                        
-                        
-                        VStack {
-                            HStack {
-                                Text("Shopping")
-                                    .font(.system(.title3))
-                                
-                                Spacer()
-                                
-                                Text("500.000")
-                                    .font(.system(.title3))
-                                    .bold()
-                            }
-                            
-                            HStack {
-                                Text("Buy Some Grocery")
-                                    .font(.system(.body))
-                                
-                                Spacer()
-                                
-                                Text("10.00 AM")
-                                    .font(.system(.body))
-                            }.padding(.top, 8)
-                        }
-                        .padding(.all, 16)
-                        .background(.white)
-                        .cornerRadius(16)
-                        .padding(.horizontal, 16)
-                        .padding(.top, 8)
+                        ItemMainTransaction(category: "Shopping", description: "Lorem ipsum dolor sit amet", amount: "Rp100.000.000", date: "10:00 AM")
+                            .padding(.horizontal, 16)
+                            .padding(.top, 8)
                         
                     }
                 }
