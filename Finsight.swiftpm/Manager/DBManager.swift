@@ -47,6 +47,99 @@ class DatabaseManager {
         return dataTransaction.map { $0 }
     }
     
+    private func createDate(day: Int, month: Int, year: Int) -> Date? {
+        var dateComponents = DateComponents()
+        dateComponents.year = year
+        dateComponents.month = month
+        dateComponents.day = day
+        dateComponents.timeZone = TimeZone(abbreviation: "IDN")
+        dateComponents.hour = 0
+        dateComponents.minute = 0
+        dateComponents.second = 0
+        
+        let newCalendar = Calendar(identifier: .gregorian)
+        return newCalendar.date(from: dateComponents)
+    }
+    
+    func readTransactionByFilter(monthNum: Int, category: String) -> [TransactionEntity]{
+        
+        let realm = try! Realm()
+        
+        let currentDate = Date()
+        
+        let calendar = Calendar.current
+        let year = calendar.component(.year, from: currentDate)
+        let month = calendar.component(.month, from: currentDate)
+        let day = calendar.component(.day, from: currentDate)
+        
+        
+        var startDate: Date? = nil
+        var endDate: Date? = nil
+        
+        if monthNum == 0 {
+            startDate = nil
+            endDate = nil
+        } else {
+            if monthNum > month {
+                startDate = createDate(day: 1, month: monthNum, year: (year - 1))
+                
+                endDate = Calendar.current.date(byAdding: .day, value: -1,
+                                                to:  createDate(day: 1, month: monthNum + 1, year: (year - 1))!)
+            } else {
+                startDate = createDate(day: 1, month: monthNum, year: (year))
+                
+                endDate = Calendar.current.date(byAdding: .day, value: -1,
+                                                to:  createDate(day: 1, month: monthNum + 1, year: (year))!)
+            }
+        }
+        
+        let dataTransaction = realm.objects(TransactionEntity.self)
+            .sorted(byKeyPath: "tr_date", ascending: false)
+        
+        if let startDate = startDate, let endDate = endDate {
+            let dataFiltered = dataTransaction.where {
+                $0.tr_date.contains(startDate...endDate)
+            }
+            return dataFiltered.map { $0 }
+        } else {
+            return dataTransaction.map { $0 }
+        }
+    }
+    
+    func readTotal(cashflow: CashFlow) -> Double {
+        let realm = try! Realm()
+        
+        let dataTransaction = realm.objects(TransactionEntity.self)
+            .sorted(byKeyPath: "tr_date", ascending: false)
+        
+        let keyPath: KeyPath<TransactionEntity, Double> = \TransactionEntity.tr_amount
+        
+        var cashflowType: String? = nil
+        
+        switch(cashflow){
+            case .income:
+                cashflowType = CashFlow.income.rawValue
+            case .expense:
+                cashflowType = CashFlow.expense.rawValue
+        }
+        
+        if let cashflowType = cashflowType, let startDate = Date().startOfMonth(), let endDate = Date().endOfMonth() {
+            let dataFiltered: Double = dataTransaction.where {
+                ($0.tr_cashflow == cashflowType) &&
+                ($0.tr_date.contains(startDate...endDate))
+            }.sum(of: keyPath)
+            
+            return dataFiltered
+        } else {
+            return 0
+        }
+        
+        
+        
+        
+        
+    }
+    
     func readTransactionByPeriod(periodFilter: PeriodFilter) -> [TransactionEntity]{
         let realm = try! Realm()
         
@@ -83,6 +176,11 @@ class DatabaseManager {
             return dataTransaction.map { $0 }
         }
     }
+}
+
+enum CashFlow: String {
+    case income = "Income"
+    case expense = "Expense"
 }
 
 enum PeriodFilter: String, CaseIterable {
@@ -142,7 +240,6 @@ extension Date {
         
         return Calendar.current.date(byAdding: .day, value: +1, to: endOfPrevYear)
     }
-    
     
 }
 

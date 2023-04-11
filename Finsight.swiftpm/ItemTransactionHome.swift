@@ -14,7 +14,7 @@ struct ItemTransactionHome: View {
     
     var body: some View {
         HStack {
-            Image(systemName: cashFlowType == "income" ? "arrow.up" : "arrow.down")
+            Image(systemName: cashFlowType == CashFlow.income.rawValue ? "arrow.up" : "arrow.down")
                 .font(.system(.title3).bold())
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 18, height: 18)

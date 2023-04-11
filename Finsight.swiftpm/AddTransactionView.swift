@@ -88,7 +88,7 @@ struct AddTransactionView: View {
                                     isIncome = true
                                 }
                             } label: {
-                                Text("Income")
+                                Text(CashFlow.income.rawValue)
                                     .foregroundColor(.white)
                             }
                             .buttonStyle(.borderedProminent)
@@ -99,7 +99,7 @@ struct AddTransactionView: View {
                             Button {
                                 isIncome = false
                             } label: {
-                                Text("Expense")
+                                Text(CashFlow.expense.rawValue)
                                     .foregroundColor(.white)
                             }
                             .buttonStyle(.borderedProminent)
@@ -124,7 +124,7 @@ struct AddTransactionView: View {
                         
                         Button {
                             if validateField() {
-                                transactionViewModel.saveTransaction(tr_category: categorySelection, tr_amount: Double(amountSelection) ?? 0, tr_date: dateSelection, tr_description: descriptionSelection, tr_cashflow: isIncome ? "income" : "expense"
+                                transactionViewModel.saveTransaction(tr_category: categorySelection, tr_amount: Double(amountSelection) ?? 0, tr_date: dateSelection, tr_description: descriptionSelection, tr_cashflow: isIncome ? CashFlow.income.rawValue : CashFlow.expense.rawValue
                                 )
                                 
                                 presentationMode.wrappedValue.dismiss()

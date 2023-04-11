@@ -9,26 +9,26 @@ import SwiftUI
 
 struct CustomMenu: View {
     var menus: [String]
-    @Binding var selectedMenu: String
+    @Binding var selectedMenu: Int
     var placeholderMenu: String
     
     
     var body: some View {
         Menu {
-            ForEach(menus, id: \.self){ menu in
+            ForEach(0..<menus.count, id: \.self){ menuIdx in
                
                 Button(action: {
-                    if menu == selectedMenu {
-                        selectedMenu.removeAll()
+                    if menuIdx == selectedMenu {
+                        selectedMenu = 0
                     } else {
-                        selectedMenu = menu
+                        selectedMenu = menuIdx
                     }
                 }, label: {
                     HStack {
-                        Text(menu)
+                        Text(menus[menuIdx])
                         Spacer()
                         
-                        if menu == selectedMenu {
+                        if menuIdx == selectedMenu {
                             Image(systemName: "checkmark")
                                 .foregroundColor(.green)
                         }
@@ -41,7 +41,7 @@ struct CustomMenu: View {
                     .font(.system(.title3))
                     .foregroundColor(.mainText)
                 
-                Text((selectedMenu.isEmpty || selectedMenu == menus.first!) ? placeholderMenu : selectedMenu)
+                Text(selectedMenu == 0 ? placeholderMenu : menus[selectedMenu])
                     .font(.system(.body))
                     .foregroundColor(.mainText)
             }

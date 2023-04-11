@@ -10,8 +10,8 @@ import SwiftUI
 struct TransactionView: View {
     @EnvironmentObject var transactionViewModel: TransactionViewModel
     
-    @State var monthFilterSelected = "All"
-    @State var categoryFilterSelected = "All"
+    @State var monthFilterSelected = 0
+    @State var categoryFilterSelected = 0
     
     var months = [
         "All",
@@ -64,8 +64,11 @@ struct TransactionView: View {
             }
         }
         .onAppear{
-            transactionViewModel.fetchTransactions()
+            transactionViewModel.fetchTransactionByFilter(monthNum: monthFilterSelected, category: "")
             print(transactionViewModel.transactions)
+        }
+        .onChange(of: monthFilterSelected) { monthNum in
+            transactionViewModel.fetchTransactionByFilter(monthNum: monthNum, category: "")
         }
     }
 }

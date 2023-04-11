@@ -58,7 +58,7 @@ struct HomeView: View {
                             Text("Account Balance")
                                 .font(.system(.body))
                                 .foregroundColor(.mainText)
-                            Text("Rp4.500.000")
+                            Text("Rp\(transactionViewModel.totalBalance.formatted(FloatingPointFormatStyle()))")
                                 .font(.system(size: 42))
                                 .foregroundColor(.mainText)
                                 .fontWeight(.bold)
@@ -77,15 +77,17 @@ struct HomeView: View {
                                         .clipShape(RoundedRectangle(cornerRadius: 16))
                                     
                                     VStack(alignment: .leading) {
-                                        Text("Expense")
+                                        Text("Income")
                                             .font(.system(size: 15))
                                             .foregroundColor(.mainText)
-                                        Text("Rp6.000.000")
+                                        Text("Rp\(transactionViewModel.totalIncome.formatted(FloatingPointFormatStyle()))")
                                             .font(.system(size: 15))
                                             .foregroundColor(.mainText)
                                             .lineLimit(0)
                                         
                                     }
+                                    
+                                    Spacer()
                                 }
                                 .padding(.all, 16)
                                 .background(.white.opacity(0.2))
@@ -106,12 +108,15 @@ struct HomeView: View {
                                         Text("Expense")
                                             .font(.system(size: 15))
                                             .foregroundColor(.mainText)
-                                        Text("Rp6.000.000")
+                                        Text("Rp\(transactionViewModel.totalExpense.formatted(FloatingPointFormatStyle()))")
                                             .font(.system(size: 15))
+                                            .bold()
                                             .foregroundColor(.mainText)
                                             .lineLimit(0)
                                         
                                     }
+                                    
+                                    Spacer()
                                 }
                                 .padding(.all, 16)
                                 .background(.white.opacity(0.2))
@@ -147,14 +152,20 @@ struct HomeView: View {
                     }
                 }
             }
-//            .onAppear{
-//                transactionViewModel.fetchTransactionByPeriod(periodFilter: PeriodFilter(rawValue: durationType[preselectedIndex]) ?? .all)
-//                print(transactionViewModel.transactions)
-//            }
-//            .onChange(of: preselectedIndex) { newIndex in
-//                transactionViewModel.fetchTransactionByPeriod(periodFilter: PeriodFilter(rawValue: durationType[newIndex]) ?? .all)
-//                print(transactionViewModel.transactions)
-//            }
+            .onAppear{
+                transactionViewModel.fetchTransactionByPeriod(periodFilter: PeriodFilter(rawValue: durationType[preselectedIndex]) ?? .all)
+                
+                transactionViewModel.fetchTotalStats()
+                
+                let currentDate = Date()
+                let calendar = Calendar.current
+                let month = calendar.component(.month, from: currentDate)
+                print(month)
+            }
+            .onChange(of: preselectedIndex) { newIndex in
+                transactionViewModel.fetchTransactionByPeriod(periodFilter: PeriodFilter(rawValue: durationType[newIndex]) ?? .all)
+                transactionViewModel.fetchTotalStats()
+            }
         }
     }
     
