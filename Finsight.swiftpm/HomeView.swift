@@ -147,14 +147,14 @@ struct HomeView: View {
                     }
                 }
             }
-            .onAppear{
-                transactionViewModel.fetchTransactionByPeriod(periodFilter: PeriodFilter(rawValue: durationType[preselectedIndex]) ?? .all)
-                print(transactionViewModel.transactions)
-            }
-            .onChange(of: preselectedIndex) { newIndex in
-                transactionViewModel.fetchTransactionByPeriod(periodFilter: PeriodFilter(rawValue: durationType[newIndex]) ?? .all)
-                print(transactionViewModel.transactions)
-            }
+//            .onAppear{
+//                transactionViewModel.fetchTransactionByPeriod(periodFilter: PeriodFilter(rawValue: durationType[preselectedIndex]) ?? .all)
+//                print(transactionViewModel.transactions)
+//            }
+//            .onChange(of: preselectedIndex) { newIndex in
+//                transactionViewModel.fetchTransactionByPeriod(periodFilter: PeriodFilter(rawValue: durationType[newIndex]) ?? .all)
+//                print(transactionViewModel.transactions)
+//            }
         }
     }
     

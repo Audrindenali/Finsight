@@ -10,6 +10,32 @@ import SwiftUI
 struct TransactionView: View {
     @EnvironmentObject var transactionViewModel: TransactionViewModel
     
+    @State var monthFilterSelected = "All"
+    @State var categoryFilterSelected = "All"
+    
+    var months = [
+        "All",
+        "Januari",
+        "Februari",
+        "Maret",
+        "April",
+        "Mei",
+        "Juni",
+        "Juli",
+        "Agustus",
+        "September",
+        "Oktober",
+        "November",
+        "Desember"
+    ]
+    
+    let categories = [
+        "All",
+        "Shopping",
+        "Investment",
+        "School"
+    ]
+    
     var body: some View {
         ZStack {
             Color.mainColor
@@ -17,29 +43,13 @@ struct TransactionView: View {
             VStack {
                 ScrollView(.horizontal,showsIndicators: false){
                     HStack {
-                        ForEach(1...5, id: \.self){ _ in
-                            
-                            Button(action: {}) {
-                                HStack {
-                                    Image(systemName: "chevron.down")
-                                        .font(.system(.title3))
-                                        .foregroundColor(.mainText)
-                                    
-                                    Text("Month")
-                                        .font(.system(.title3))
-                                        .foregroundColor(.mainText)
-                                }
-                                .padding(.all, 12)
-                                .overlay {
-                                    Capsule()
-                                        .stroke(Color.mainText)
-                                }
-                            }
-                            .padding(.all, 8)
-                            
-                            
-                            
-                        }
+                        CustomMenu(menus: months, selectedMenu: $monthFilterSelected, placeholderMenu: "Month")
+                        .padding(.leading, 16)
+                        .padding(.vertical, 16)
+                        
+                        CustomMenu(menus: categories, selectedMenu: $categoryFilterSelected, placeholderMenu: "Category")
+                        .padding(.leading, 16)
+                        .padding(.vertical, 16)
                     }
                 }
                 
