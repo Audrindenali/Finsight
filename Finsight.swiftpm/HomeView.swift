@@ -11,7 +11,7 @@ struct HomeView: View {
     @EnvironmentObject var transactionViewModel: TransactionViewModel
     
     @State private var durationSelection = "Today"
-    let durationType = ["Today", "Weak", "Month", "Year"]
+    let durationType = PeriodFilter.allCases.map{ $0.rawValue }
     @State var preselectedIndex = 0
     
     var body: some View {
@@ -148,8 +148,11 @@ struct HomeView: View {
                 }
             }
             .onAppear{
-//                transactionViewModel.fetchTransactions()
-                transactionViewModel.fetchTransactionByPeriod(periodFilter: .week)
+                transactionViewModel.fetchTransactionByPeriod(periodFilter: PeriodFilter(rawValue: durationType[preselectedIndex]) ?? .all)
+                print(transactionViewModel.transactions)
+            }
+            .onChange(of: preselectedIndex) { newIndex in
+                transactionViewModel.fetchTransactionByPeriod(periodFilter: PeriodFilter(rawValue: durationType[newIndex]) ?? .all)
                 print(transactionViewModel.transactions)
             }
         }
