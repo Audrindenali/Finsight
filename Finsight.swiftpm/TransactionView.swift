@@ -54,8 +54,8 @@ struct TransactionView: View {
                 }
                 
                 ScrollView {
-                    ForEach(1...20, id: \.self){ _ in
-                        ItemMainTransaction(category: "Shopping", description: "Lorem ipsum dolor sit amet", amount: "Rp100.000.000", date: "10:00 AM")
+                    ForEach(transactionViewModel.transactions, id: \._id){ transaction in
+                        ItemMainTransaction(category: transaction.tr_category, description: transaction.tr_description, amount: "\(transaction.tr_amount)", date: "10:00 AM")
                             .padding(.horizontal, 16)
                             .padding(.top, 8)
                         
@@ -64,8 +64,8 @@ struct TransactionView: View {
             }
         }
         .onAppear{
-//            transactionViewModel.fetchTransactions()
-//            print(transactionViewModel.transactions)
+            transactionViewModel.fetchTransactions()
+            print(transactionViewModel.transactions)
         }
     }
 }
