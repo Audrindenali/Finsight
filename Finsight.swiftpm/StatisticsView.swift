@@ -40,7 +40,7 @@ struct StatisticsView: View {
                     
                     ScrollView {
                         ForEach(1...5, id: \.self){ _ in
-                            ItemTransaction(cashFlowType: "Income", category: "100000", amount: "Rp100000")
+                            ItemTransactionHome(cashFlowType: "Income", category: "100000", amount: "Rp100000")
                         }
                     }
                     .padding(.all, 24)

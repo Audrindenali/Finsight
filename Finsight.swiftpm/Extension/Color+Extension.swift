@@ -10,6 +10,6 @@ import SwiftUI
 extension Color {
     static let mainColor = Color("MainColor")
     static let mainText = Color("MainText")
-    static let placeHolderText = Color("PlaceholderText")
+    static let secondaryText = Color("SecondaryText")
     static let border = Color("Border")
 }

@@ -48,7 +48,7 @@ struct AddTransactionView: View {
                             } label: {
                                 Text("Category")
                                 .font(.title3)
-                                .foregroundColor(categorySelection.isEmpty ? .placeHolderText : .black)
+                                .foregroundColor(categorySelection.isEmpty ? .secondaryText : .black)
                             }
                                 
                         } label: {
@@ -62,7 +62,7 @@ struct AddTransactionView: View {
                                     .font(.system(.title3))
                             }
                         }
-                        .foregroundColor(categorySelection.isEmpty ? .placeHolderText : .black)
+                        .foregroundColor(categorySelection.isEmpty ? .secondaryText : .black)
                         .padding(.all, 16)
                         .overlay {
                             RoundedRectangle(cornerRadius: 16)

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ItemTransaction: View {
+struct ItemTransactionHome: View {
     var cashFlowType: String
     var category: String
     var amount: String
@@ -42,6 +42,6 @@ struct ItemTransaction: View {
 
 struct ItemTransaction_Previews: PreviewProvider {
     static var previews: some View {
-        ItemTransaction(cashFlowType: "Income", category: "Investment", amount: "Rp10.000.000")
+        ItemTransactionHome(cashFlowType: "Income", category: "Investment", amount: "Rp10.000.000")
     }
 }
