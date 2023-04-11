@@ -2,7 +2,7 @@
 //  File.swift
 //  
 //
-//  Created by Rivaldo Fernandes on 10/04/23.
+//  Created by Rivaldo Fernandes on 11/04/23.
 //
 
 import Foundation
@@ -15,7 +15,8 @@ class DatabaseManager {
         tr_category: String,
         tr_amount: Double,
         tr_date: Date,
-        tr_description: String
+        tr_description: String,
+        tr_cashflow: String
     ){
         let realm = try! Realm()
         
@@ -25,6 +26,7 @@ class DatabaseManager {
         transaction.tr_amount = tr_amount
         transaction.tr_date = tr_date
         transaction.tr_description = tr_description
+        transaction.tr_cashflow = tr_cashflow
         
         do {
             try realm.write {
