@@ -18,8 +18,9 @@ class TransactionViewModel: ObservableObject {
         tr_category: String,
         tr_amount: Double,
         tr_date: Date,
-        tr_description: String
+        tr_description: String,
+        tr_cashflow: String
     ){
-        DatabaseManager.shared.saveTransaction(tr_category: tr_category, tr_amount: tr_amount, tr_date: tr_date, tr_description: tr_description)
+        DatabaseManager.shared.saveTransaction(tr_category: tr_category, tr_amount: tr_amount, tr_date: tr_date, tr_description: tr_description, tr_cashflow: tr_cashflow)
     }
 }

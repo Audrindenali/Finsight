@@ -14,13 +14,13 @@ struct ItemTransactionHome: View {
     
     var body: some View {
         HStack {
-            Image(systemName: "person")
-                .resizable()
+            Image(systemName: cashFlowType == "income" ? "arrow.up" : "arrow.down")
+                .font(.system(.title3).bold())
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 18, height: 18)
-                .padding(18)
-                .foregroundColor(.mainColor)
-                .background(.blue)
+                .padding(10)
+                .foregroundColor(.mainText)
+                .background(Color.mainColor)
                 .clipShape(Circle())
             
             Text(amount)
@@ -34,7 +34,7 @@ struct ItemTransactionHome: View {
                 .font(.body)
         }
         .padding(.all, 8)
-        .background(.blue.opacity(0.2))
+        .background(.gray.opacity(0.1))
         .clipShape(RoundedRectangle(cornerRadius: 8))
         
     }

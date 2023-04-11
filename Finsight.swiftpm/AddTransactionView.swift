@@ -124,7 +124,8 @@ struct AddTransactionView: View {
                         
                         Button {
                             if validateField() {
-                                transactionViewModel.saveTransaction(tr_category: categorySelection, tr_amount: Double(amountSelection) ?? 0, tr_date: dateSelection, tr_description: descriptionSelection)
+                                transactionViewModel.saveTransaction(tr_category: categorySelection, tr_amount: Double(amountSelection) ?? 0, tr_date: dateSelection, tr_description: descriptionSelection, tr_cashflow: isIncome ? "income" : "expense"
+                                )
                                 
                                 presentationMode.wrappedValue.dismiss()
                             } else {

@@ -36,8 +36,8 @@ struct MainView: View {
 //                        Label("Transaction", systemImage: "arrow.left.arrow.right")
 //                    }
                 
-                AddTransactionView()
-                    .tag("add")
+                StatisticsView()
+                    .tag("statistics")
 //                    .tabItem {
 //                        Label("Add", systemImage: "plus")
 //                    }

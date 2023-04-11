@@ -9,7 +9,10 @@ import SwiftUI
 
 struct HomeView: View {
     @EnvironmentObject var transactionViewModel: TransactionViewModel
-    @State private var selectedDuration = "Today"
+    
+    @State private var durationSelection = "Today"
+    let durationType = ["Today", "Weak", "Month", "Year"]
+    @State var preselectedIndex = 0
     
     var body: some View {
         GeometryReader { screen in
@@ -17,6 +20,7 @@ struct HomeView: View {
                 ZStack {
                     Color.mainColor
                         .cornerRadius(32, corners: [.bottomLeft, .bottomRight])
+                        .ignoresSafeArea(edges: .top)
                     
                     VStack {
                         HStack {
@@ -121,16 +125,18 @@ struct HomeView: View {
                 }
                 .frame(height: screen.size.height / 2)
 
-                Picker("Select Time Transaction", selection: $selectedDuration) {
-                    
-                    Text("Today").tag(0)
-                    Text("Week").tag(1)
-                    Text("Month").tag(2)
-                    Text("Year").tag(3)
-                }
-                .pickerStyle(.segmented)
+//                Picker("Select Time Transaction", selection: $durationSelection) {
+//
+//                    ForEach(durationType, id: \.self) {
+//                        Text($0)
+//                            .clipShape(Capsule())
+//                    }
+//                }
+                CustomSegmentedControl(preselectedIndex: $preselectedIndex, options: durationType)
                 .padding(.horizontal, 16)
                 .padding(.top, 32)
+                
+                
                 
                 HStack {
                     Text("Recent Transaction")
@@ -142,7 +148,9 @@ struct HomeView: View {
                 
                 ScrollView {
                     ForEach(transactionViewModel.transactions, id: \._id){ transaction in
-                        ItemTransactionHome(cashFlowType: "Income", category: transaction.tr_category, amount: "\(transaction.tr_amount)")
+                        ItemTransactionHome(cashFlowType: transaction.tr_cashflow, category: transaction.tr_category, amount: "\(transaction.tr_amount)")
+                            .padding(.horizontal, 16)
+                            .padding(.top, 8)
                     }
                 }
             }
