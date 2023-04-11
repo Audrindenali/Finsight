@@ -14,6 +14,10 @@ class TransactionViewModel: ObservableObject {
         transactions = DatabaseManager.shared.readTransactions()
     }
     
+    func fetchTransactionByPeriod(periodFilter: PeriodFilter){
+        transactions = DatabaseManager.shared.readTransactionByPeriod(periodFilter: periodFilter)
+    }
+    
     func saveTransaction(
         tr_category: String,
         tr_amount: Double,

@@ -125,13 +125,6 @@ struct HomeView: View {
                 }
                 .frame(height: screen.size.height / 2)
 
-//                Picker("Select Time Transaction", selection: $durationSelection) {
-//
-//                    ForEach(durationType, id: \.self) {
-//                        Text($0)
-//                            .clipShape(Capsule())
-//                    }
-//                }
                 CustomSegmentedControl(preselectedIndex: $preselectedIndex, options: durationType)
                 .padding(.horizontal, 16)
                 .padding(.top, 32)
@@ -155,7 +148,8 @@ struct HomeView: View {
                 }
             }
             .onAppear{
-                transactionViewModel.fetchTransactions()
+//                transactionViewModel.fetchTransactions()
+                transactionViewModel.fetchTransactionByPeriod(periodFilter: .week)
                 print(transactionViewModel.transactions)
             }
         }
