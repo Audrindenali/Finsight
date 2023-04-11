@@ -35,7 +35,6 @@ struct ItemTransaction: View {
         .padding(.all, 8)
         .background(.blue.opacity(0.2))
         .clipShape(RoundedRectangle(cornerRadius: 8))
-        .padding(.horizontal, 16)
         
     }
 }

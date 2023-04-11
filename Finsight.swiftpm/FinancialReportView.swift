@@ -16,19 +16,41 @@ struct FinancialReportView: View {
     
     var body: some View {
         GeometryReader { screen in
-            VStack {
-                Picker("Select Category", selection: $durationSelection) {
-                    ForEach(duration, id: \.self) {
-                        Text($0)
-                    }
-                }.pickerStyle(.menu)
-                
-                Picker("Select Time Transaction", selection: $cashFlowSelection) {
+            ZStack {
+                Color.mainColor
+                    .ignoresSafeArea()
+                VStack {
+                    Picker("Select Category", selection: $durationSelection) {
+                        ForEach(duration, id: \.self) {
+                            Text($0)
+                        }
+                    }.pickerStyle(.menu)
                     
-                    ForEach(cashFlowType, id: \.self) {
-                        Text($0)
+                    VStack {
+                        Color.blue
                     }
-                }.pickerStyle(.segmented)
+                    .frame(height: screen.size.height / 3)
+                    
+                    Picker("Select Time Transaction", selection: $cashFlowSelection) {
+                        
+                        ForEach(cashFlowType, id: \.self) {
+                            Text($0)
+                        }
+                    }.pickerStyle(.segmented)
+                    
+                    ScrollView {
+                        ForEach(1...5, id: \.self){ _ in
+                            ItemTransaction(cashFlowType: "Income", amount: "Rp100000")
+                        }
+                    }
+                    .padding(.all, 24)
+                    .padding(.top, 16)
+                    .background(Color.white)
+                    .cornerRadius(56, corners: [.topLeft, .topRight])
+                    .padding(.all, 16)
+                    
+                }
+                
             }
             
         }
