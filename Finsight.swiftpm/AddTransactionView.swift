@@ -12,13 +12,13 @@ struct AddTransactionView: View {
     @EnvironmentObject var transactionViewModel: TransactionViewModel
     
     
-    @State private var nominal: String = ""
+    @State private var amountSelection: String = ""
     @State private var categorySelection: String = ""
     let categories = ["Investment", "School", "Shopping", "Food"]
     
-    @State private var description: String = ""
+    @State private var descriptionSelection: String = ""
+    @State private var dateSelection = Date.now
     @State private var isIncome = true
-    @State private var dateSelection: String = ""
 
     
     var body: some View {
@@ -32,7 +32,7 @@ struct AddTransactionView: View {
                         .foregroundColor(.mainText)
                         .bold()
                     
-                    TextField("Enter the nominal", text: $nominal)
+                    TextField("Enter the nominal", text: $amountSelection)
                         .font(.system(.largeTitle).weight(.bold))
                         .foregroundColor(.mainText)
                         .padding(.bottom, 16)
@@ -70,7 +70,7 @@ struct AddTransactionView: View {
                         .padding(.top, 32)
                         
                         
-                        TextField("Description", text: $description)
+                        TextField("Description", text: $descriptionSelection)
                             .font(.system(.title3))
                             .padding(.all, 16)
                             
@@ -81,7 +81,7 @@ struct AddTransactionView: View {
                             .padding(.top, 32)
                             
                         
-                        HStack {
+                        HStack(spacing: 16) {
                             Button {
                                 withAnimation {
                                     isIncome = true
@@ -91,10 +91,9 @@ struct AddTransactionView: View {
                                     .foregroundColor(.white)
                             }
                             .buttonStyle(.borderedProminent)
-                            .padding(.horizontal, 20)
-                            .padding(.vertical, 5)
                             .tint(isIncome ? .mainColor : .gray)
-                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                            .clipShape(RoundedRectangle(cornerRadius: 18))
+                            
                             
                             Button {
                                 isIncome = false
@@ -103,39 +102,31 @@ struct AddTransactionView: View {
                                     .foregroundColor(.white)
                             }
                             .buttonStyle(.borderedProminent)
-                            .padding(.horizontal, 20)
-                            .padding(.vertical, 5)
                             .tint(!isIncome ? .mainColor : .gray)
-                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                            .clipShape(RoundedRectangle(cornerRadius: 18))
                         }
                         .padding(.top, 16)
                         
-                        Button(action: {}, label: {
-                            HStack {
-                                Text("Pick your date")
-                                    .font(.system(.title3))
-                                    .padding(.all, 16)
-                                    .foregroundColor(dateSelection.isEmpty ? .placeHolderText : .black)
-                                    
-                                Spacer()
-                                
-                                Image(systemName: "chevron.forward")
-                                    .font(.system(.title3))
-                                    .padding(.trailing, 16)
-                                    
+                        
+                        DatePicker("Select your date", selection: $dateSelection, displayedComponents: .date)
+                            .font(.system(.title3))
+                            .padding(.all, 16)
+                            
+                            .overlay {
+                                RoundedRectangle(cornerRadius: 16)
+                                    .stroke(.black)
                             }
-                        })
-                        .overlay {
-                            RoundedRectangle(cornerRadius: 16)
-                                .stroke(.black)
-                        }
-                        .foregroundColor(dateSelection.isEmpty ? .placeHolderText : .black)
-                        .padding(.top, 16)
+                            .padding(.top, 16)
+                            .lineLimit(0)
                         
                         Spacer()
                         
                         Button {
-                            transactionViewModel.saveTransaction(tr_category: self.categorySelection, tr_amount: Double(nominal) ?? 0, tr_date: Date(), tr_description: description)
+                            if validateField() {
+                                transactionViewModel.saveTransaction(tr_category: categorySelection, tr_amount: Double(amountSelection) ?? 0, tr_date: dateSelection, tr_description: descriptionSelection)
+                            } else {
+                                print("Isi dahulu semua field")
+                            }
                         } label: {
                             Text("Continue")
                                 .font(.system(.title3))
@@ -156,11 +147,21 @@ struct AddTransactionView: View {
                 .ignoresSafeArea(edges: .bottom)
                 .padding(.all, 16)
             } .ignoresSafeArea(edges: .bottom)
-           
-            
-            
-            
         }
+    }
+    
+    
+    private func validateField() -> Bool{
+        if (
+            !amountSelection.isEmpty &&
+            !categorySelection.isEmpty &&
+            !descriptionSelection.isEmpty
+        ) {
+            return true
+        } else {
+            return false
+        }
+        
     }
 }
 
