@@ -65,18 +65,17 @@ class DatabaseManager {
         
         let realm = try! Realm()
         
-        let currentDate = Date()
         
+        let currentDate = Date()
         let calendar = Calendar.current
         let year = calendar.component(.year, from: currentDate)
         let month = calendar.component(.month, from: currentDate)
-        let day = calendar.component(.day, from: currentDate)
         
         
         var startDate: Date? = nil
         var endDate: Date? = nil
         
-        if monthNum == 0 {
+        if monthNum == 0  {
             startDate = nil
             endDate = nil
         } else {
@@ -97,12 +96,28 @@ class DatabaseManager {
             .sorted(byKeyPath: "tr_date", ascending: false)
         
         if let startDate = startDate, let endDate = endDate {
-            let dataFiltered = dataTransaction.where {
-                $0.tr_date.contains(startDate...endDate)
+            if category == Categories.all.rawValue {
+                let dataFiltered = dataTransaction.where {
+                    ($0.tr_date.contains(startDate...endDate))
+                }
+                return dataFiltered.map { $0 }
+            } else {
+                let dataFiltered = dataTransaction.where {
+                    ($0.tr_category == category) &&
+                    ($0.tr_date.contains(startDate...endDate))
+                }
+                
+                return dataFiltered.map { $0 }
             }
-            return dataFiltered.map { $0 }
         } else {
-            return dataTransaction.map { $0 }
+            if category == Categories.all.rawValue {
+                return dataTransaction.map { $0 }
+            } else {
+                let dataFiltered = dataTransaction.where {
+                    ($0.tr_category == category)
+                }
+                return dataFiltered.map { $0 }
+            }
         }
     }
     
@@ -185,10 +200,17 @@ enum CashFlow: String {
 
 enum PeriodFilter: String, CaseIterable {
     case all = "All"
-    case week = "Week"
     case today = "Today"
+    case week = "Week"
     case month = "Month"
     case year = "Year"
+}
+
+enum Categories: String, CaseIterable {
+    case all = "All"
+    case shopping = "Shopping"
+    case investment = "Investment"
+    case food = "Food"
 }
 
 extension Date {

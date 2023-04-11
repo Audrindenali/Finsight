@@ -29,12 +29,7 @@ struct TransactionView: View {
         "Desember"
     ]
     
-    let categories = [
-        "All",
-        "Shopping",
-        "Investment",
-        "School"
-    ]
+    let categories = Categories.allCases.map { $0.rawValue }
     
     var body: some View {
         ZStack {
@@ -64,11 +59,14 @@ struct TransactionView: View {
             }
         }
         .onAppear{
-            transactionViewModel.fetchTransactionByFilter(monthNum: monthFilterSelected, category: "")
+            transactionViewModel.fetchTransactionByFilter(monthNum: monthFilterSelected, category: categories[categoryFilterSelected])
             print(transactionViewModel.transactions)
         }
         .onChange(of: monthFilterSelected) { monthNum in
-            transactionViewModel.fetchTransactionByFilter(monthNum: monthNum, category: "")
+            transactionViewModel.fetchTransactionByFilter(monthNum: monthNum, category: categories[categoryFilterSelected])
+        }
+        .onChange(of: categoryFilterSelected) { categoryNum in
+            transactionViewModel.fetchTransactionByFilter(monthNum: monthFilterSelected, category: categories[categoryNum])
         }
     }
 }
