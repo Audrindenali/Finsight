@@ -76,7 +76,6 @@ struct ProfileView: View {
                             Spacer()
                             
                         }
-                        .padding(.horizontal)
                         .padding(.vertical)
                     }
                 }

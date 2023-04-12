@@ -25,7 +25,7 @@ struct CustomTabBar: View {
                     .font(.title2)
                     .foregroundColor(.white)
                     .padding()
-                    .background(.red)
+                    .background(Color.mainColor)
                     .clipShape(Circle())
                     .shadow(color: Color.black.opacity(0.05), radius: 5, x: 5, y:5)
                     .shadow(color: Color.black.opacity(0.05), radius: 5, x: -5, y:-5)
@@ -66,16 +66,16 @@ struct TabBarButton: View {
                     .renderingMode(.template)
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 28, height: 28)
-                    .foregroundColor(selectedTab == tag ? Color(.red) : Color.gray.opacity(0.5))
+                    .foregroundColor(selectedTab == tag ? Color.mainColor : Color.gray.opacity(0.5))
                 
                 Text(title)
                     .font(.footnote)
-                    .foregroundColor(.red)
+                    .foregroundColor(selectedTab == tag ? Color.mainColor : Color.gray.opacity(0.5))
                     .padding(.bottom, 5)
                 
                 if selectedTab == tag {
                     Circle()
-                        .fill(.red)
+                        .fill(Color.mainColor)
                         //Sliding Effect
                         .matchedGeometryEffect(id: "TAB", in: animation)
                         .frame(width: 8, height: 8)
