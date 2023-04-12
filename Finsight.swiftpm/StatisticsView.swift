@@ -8,11 +8,14 @@
 import SwiftUI
 
 struct StatisticsView: View {
+    @EnvironmentObject var transactionViewModel: TransactionViewModel
     @State private var durationSelection = "Month"
     let duration = ["Today", "Week", "Month", "Year"]
     
     @State private var cashFlowSelection = "Income"
-    let cashFlowType = ["Income", "Expense"]
+    let cashFlowType = CashFlow.allCases
+    
+    @State private var preselectedIndex: Int = 0
     
     var body: some View {
         GeometryReader { screen in
@@ -31,28 +34,47 @@ struct StatisticsView: View {
                     }
                     .frame(height: screen.size.height / 3)
                     
-                    Picker("Select Time Transaction", selection: $cashFlowSelection) {
-                        
-                        ForEach(cashFlowType, id: \.self) {
-                            Text($0)
-                        }
-                    }.pickerStyle(.segmented)
+                    CustomSegmentedControl(preselectedIndex: $preselectedIndex, options: (cashFlowType.map{ $0.rawValue }))
+                    .padding(.horizontal, 16)
+                    .padding(.top, 32)
                     
-                    ScrollView {
-                        ForEach(1...5, id: \.self){ _ in
-                            ItemTransactionHome(cashFlowType: "Income", category: "100000", amount: "Rp100000")
+                    ScrollView(showsIndicators: false) {
+                        ForEach(transactionViewModel.totalAllCategory, id: \.category){ total in
+                            VStack {
+                                HStack {
+                                    Image(systemName: "circle.fill")
+                                        .font(.system(.footnote))
+                                        .foregroundColor(.mainColor)
+                                    Text(total.category.rawValue)
+                                        .font(.system(.body).bold())
+                                    Spacer()
+                                    Text("Rp\(total.total.formatted(FloatingPointFormatStyle()))")
+                                        .font(.system(.body).bold())
+                                        .foregroundColor(.mainColor)
+                                }
+                                
+                                ProgressView(value: 50, total: 100)
+                                    .scaleEffect(x: 1, y: 3, anchor: .center)
+                                    .tint(.mainColor)
+//                                    .cornerRadius(16)
+                            }
+                            .padding()
                         }
                     }
                     .padding(.all, 24)
                     .padding(.top, 16)
                     .background(Color.white)
                     .cornerRadius(56, corners: [.topLeft, .topRight])
-                    .padding(.all, 16)
-                    
+                    .padding(.top, 16)
+                    .padding(.horizontal).ignoresSafeArea(edges: .bottom)
                 }
-                
             }
-            
+            .onAppear {
+                transactionViewModel.fetchTotalTransactionByCashFlow(cashFlow: cashFlowType[preselectedIndex])
+            }
+            .onChange(of: preselectedIndex) { newIdx in
+                transactionViewModel.fetchTotalTransactionByCashFlow(cashFlow: cashFlowType[newIdx])
+            }
         }
     }
 }

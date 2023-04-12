@@ -12,6 +12,36 @@ class TransactionViewModel: ObservableObject {
     @Published var totalExpense: Double = 0
     @Published var totalIncome: Double = 0
     @Published var totalBalance: Double = 0
+    @Published var totalAllCategory: [TotalCategory] = []
+    
+    
+    func fetchTotalTransactionByCashFlow(cashFlow: CashFlow){
+        
+        var categories: [Categories]? = nil
+        
+        switch(cashFlow){
+            case .income:
+                categories = [.shopping, .food, .entertainment, .subscription]
+            
+            case .expense:
+                categories = [.salary, .bonus]
+        }
+        
+        if let categories = categories {
+            totalAllCategory.removeAll()
+            
+            for category in categories {
+                totalAllCategory.append(
+                    TotalCategory(category: category, total: DatabaseManager.shared.readTotalTransactionByCategory(category: category))
+                )
+                
+                totalAllCategory = totalAllCategory.sorted { $0.total > $1.total }
+            }
+        } else {
+            totalAllCategory.removeAll()
+        }
+    }
+    
     
     func fetchTransactions(){
         transactions = DatabaseManager.shared.readTransactions()

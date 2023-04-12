@@ -37,6 +37,31 @@ class DatabaseManager {
         }
     }
     
+    func readTotalTransactionByCategory(category: Categories) -> Double {
+        let realm = try! Realm()
+        
+        let dataTransaction = realm.objects(TransactionEntity.self)
+            .sorted(byKeyPath: "tr_date", ascending: false)
+        
+        let keyPath: KeyPath<TransactionEntity, Double> = \TransactionEntity.tr_amount
+        
+        if (category.rawValue == Categories.all.rawValue){
+            return 0
+        }
+        
+        
+        if let startDate = Date().startOfMonth(), let endDate = Date().endOfMonth() {
+            let dataFiltered: Double = dataTransaction.where {
+                ($0.tr_category == category.rawValue) &&
+                ($0.tr_date.contains(startDate...endDate))
+            }.sum(of: keyPath)
+            
+            return dataFiltered
+        } else {
+            return 0
+        }
+    }
+    
     func readTransactions() -> [TransactionEntity]{
         let realm = try! Realm()
         
@@ -148,11 +173,6 @@ class DatabaseManager {
         } else {
             return 0
         }
-        
-        
-        
-        
-        
     }
     
     func readTransactionByPeriod(periodFilter: PeriodFilter) -> [TransactionEntity]{
@@ -193,7 +213,7 @@ class DatabaseManager {
     }
 }
 
-enum CashFlow: String {
+enum CashFlow: String, CaseIterable {
     case income = "Income"
     case expense = "Expense"
 }
@@ -209,8 +229,11 @@ enum PeriodFilter: String, CaseIterable {
 enum Categories: String, CaseIterable {
     case all = "All"
     case shopping = "Shopping"
-    case investment = "Investment"
     case food = "Food"
+    case entertainment = "Entertainment"
+    case subscription = "Subscription"
+    case salary = "Salary"
+    case bonus = "Bonus"
 }
 
 extension Date {
