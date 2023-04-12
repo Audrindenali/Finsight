@@ -12,8 +12,9 @@ struct StatisticsView: View {
     @State private var durationSelection = "Month"
     let duration = ["Today", "Week", "Month", "Year"]
     
-    @State private var cashFlowSelection = "Income"
     let cashFlowType = CashFlow.allCases
+    @State private var cashFlowSelection = CashFlow.expense.rawValue
+    
     
     @State private var preselectedIndex: Int = 0
     
@@ -53,7 +54,7 @@ struct StatisticsView: View {
                                         .foregroundColor(.mainColor)
                                 }
                                 
-                                ProgressView(value: total.total, total: cashFlowSelection == CashFlow.income.rawValue ? transactionViewModel.totalIncome : transactionViewModel.totalExpense)
+                                ProgressView(value: total.total, total: cashFlowSelection == CashFlow.expense.rawValue ? transactionViewModel.totalExpense : transactionViewModel.totalIncome)
                                     .scaleEffect(x: 1, y: 3, anchor: .center)
                                     .tint(.mainColor)
 //                                    .cornerRadius(16)
@@ -72,6 +73,12 @@ struct StatisticsView: View {
             .onAppear {
                 transactionViewModel.fetchTotalTransactionByCashFlow(cashFlow: cashFlowType[preselectedIndex])
                 transactionViewModel.fetchTotalStats()
+                
+                if(cashFlowSelection == CashFlow.income.rawValue){
+                    print("income")
+                } else {
+                    print("expense")
+                }
             }
             .onChange(of: preselectedIndex) { newIdx in
                 transactionViewModel.fetchTotalTransactionByCashFlow(cashFlow: cashFlowType[newIdx])
