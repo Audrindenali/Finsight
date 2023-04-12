@@ -53,7 +53,7 @@ struct StatisticsView: View {
                                         .foregroundColor(.mainColor)
                                 }
                                 
-                                ProgressView(value: 50, total: 100)
+                                ProgressView(value: total.total, total: cashFlowSelection == CashFlow.income.rawValue ? transactionViewModel.totalIncome : transactionViewModel.totalExpense)
                                     .scaleEffect(x: 1, y: 3, anchor: .center)
                                     .tint(.mainColor)
 //                                    .cornerRadius(16)
@@ -71,9 +71,12 @@ struct StatisticsView: View {
             }
             .onAppear {
                 transactionViewModel.fetchTotalTransactionByCashFlow(cashFlow: cashFlowType[preselectedIndex])
+                transactionViewModel.fetchTotalStats()
             }
             .onChange(of: preselectedIndex) { newIdx in
                 transactionViewModel.fetchTotalTransactionByCashFlow(cashFlow: cashFlowType[newIdx])
+                
+                transactionViewModel.fetchTotalStats()
             }
         }
     }

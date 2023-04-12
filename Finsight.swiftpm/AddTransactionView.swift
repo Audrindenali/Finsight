@@ -14,8 +14,8 @@ struct AddTransactionView: View {
     
     
     @State private var amountSelection: String = ""
-    @State private var categorySelection: String = ""
-    let categories = ["Investment", "School", "Shopping", "Food"]
+    @State private var categorySelection: Int = 0
+    let categories = Categories.allCases.map { $0.rawValue }
     
     @State private var descriptionSelection: String = ""
     @State private var dateSelection = Date.now
@@ -42,18 +42,18 @@ struct AddTransactionView: View {
                     VStack {
                         Menu {
                             Picker(selection: $categorySelection) {
-                                ForEach(categories, id: \.self) {
-                                    Text($0)
+                                ForEach(1..<categories.count, id: \.self) {
+                                    Text(categories[$0])
                                 }
                             } label: {
                                 Text("Category")
                                 .font(.title3)
-                                .foregroundColor(categorySelection.isEmpty ? .secondaryText : .black)
+                                .foregroundColor(categorySelection == 0 ? .secondaryText : .black)
                             }
                                 
                         } label: {
                             HStack {
-                                Text(categorySelection.isEmpty ? "Select Category" : categorySelection)
+                                Text(categorySelection == 0 ? "Select Category" : categories[categorySelection])
                                     .font(.title3)
                                 
                                 Spacer()
@@ -62,7 +62,7 @@ struct AddTransactionView: View {
                                     .font(.system(.title3))
                             }
                         }
-                        .foregroundColor(categorySelection.isEmpty ? .secondaryText : .black)
+                        .foregroundColor(categorySelection == 0 ? .secondaryText : .black)
                         .padding(.all, 16)
                         .overlay {
                             RoundedRectangle(cornerRadius: 16)
@@ -124,7 +124,7 @@ struct AddTransactionView: View {
                         
                         Button {
                             if validateField() {
-                                transactionViewModel.saveTransaction(tr_category: categorySelection, tr_amount: Double(amountSelection) ?? 0, tr_date: dateSelection, tr_description: descriptionSelection, tr_cashflow: isIncome ? CashFlow.income.rawValue : CashFlow.expense.rawValue
+                                transactionViewModel.saveTransaction(tr_category: categories[categorySelection], tr_amount: Double(amountSelection) ?? 0, tr_date: dateSelection, tr_description: descriptionSelection, tr_cashflow: isIncome ? CashFlow.income.rawValue : CashFlow.expense.rawValue
                                 )
                                 
                                 presentationMode.wrappedValue.dismiss()
@@ -158,7 +158,7 @@ struct AddTransactionView: View {
     private func validateField() -> Bool{
         if (
             !amountSelection.isEmpty &&
-            !categorySelection.isEmpty &&
+            categorySelection != 0 &&
             !descriptionSelection.isEmpty
         ) {
             return true

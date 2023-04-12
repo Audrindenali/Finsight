@@ -214,8 +214,8 @@ class DatabaseManager {
 }
 
 enum CashFlow: String, CaseIterable {
-    case income = "Income"
     case expense = "Expense"
+    case income = "Income"
 }
 
 enum PeriodFilter: String, CaseIterable {

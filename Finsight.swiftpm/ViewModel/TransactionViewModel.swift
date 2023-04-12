@@ -20,10 +20,10 @@ class TransactionViewModel: ObservableObject {
         var categories: [Categories]? = nil
         
         switch(cashFlow){
-            case .income:
+            case .expense:
                 categories = [.shopping, .food, .entertainment, .subscription]
             
-            case .expense:
+            case .income:
                 categories = [.salary, .bonus]
         }
         
