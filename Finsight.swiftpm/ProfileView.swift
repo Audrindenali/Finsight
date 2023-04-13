@@ -30,10 +30,10 @@ struct ProfileView: View {
                     
                     VStack(alignment: .leading) {
                         Text("Username")
-                            .foregroundColor(.mainText)
+                            .foregroundColor(.white)
                             
                         Text("Rebecca")
-                            .foregroundColor(.mainText)
+                            .foregroundColor(.white)
                             .font(.system(.title))
                     }
                     

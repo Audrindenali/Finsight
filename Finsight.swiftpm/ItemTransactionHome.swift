@@ -19,7 +19,7 @@ struct ItemTransactionHome: View {
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 18, height: 18)
                 .padding(10)
-                .foregroundColor(.mainText)
+                .foregroundColor(.white)
                 .background(Color.mainColor)
                 .clipShape(Circle())
             

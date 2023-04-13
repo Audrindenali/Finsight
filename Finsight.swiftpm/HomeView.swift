@@ -27,10 +27,10 @@ struct HomeView: View {
                             VStack(alignment: .leading) {
                                 Text("Monday,")
                                     .font(.system(.body))
-                                    .foregroundColor(.mainText)
+                                    .foregroundColor(.white)
                                 Text("3 April 2023")
                                     .font(.system(.body))
-                                    .foregroundColor(.mainText)
+                                    .foregroundColor(.white)
                             }
                             
                             Spacer()
@@ -42,7 +42,7 @@ struct HomeView: View {
                             Text("Rebecca")
                                 .font(.system(.body))
                                 .fontWeight(.bold)
-                                .foregroundColor(.mainText)
+                                .foregroundColor(.white)
                         }
                         .padding(.horizontal, 24)
                         .padding(.top, 24)
@@ -57,10 +57,10 @@ struct HomeView: View {
                             
                             Text("Account Balance")
                                 .font(.system(.body))
-                                .foregroundColor(.mainText)
+                                .foregroundColor(.white)
                             Text("Rp\(transactionViewModel.totalBalance.formatted(FloatingPointFormatStyle()))")
                                 .font(.system(size: 42))
-                                .foregroundColor(.mainText)
+                                .foregroundColor(.white)
                                 .fontWeight(.bold)
                                 .padding(.top, 1)
                                 .truncationMode(.tail)
@@ -79,10 +79,10 @@ struct HomeView: View {
                                     VStack(alignment: .leading) {
                                         Text("Income")
                                             .font(.system(size: 15))
-                                            .foregroundColor(.mainText)
+                                            .foregroundColor(.white)
                                         Text("Rp\(transactionViewModel.totalIncome.formatted(FloatingPointFormatStyle()))")
                                             .font(.system(size: 15))
-                                            .foregroundColor(.mainText)
+                                            .foregroundColor(.white)
                                             .lineLimit(0)
                                         
                                     }
@@ -107,11 +107,11 @@ struct HomeView: View {
                                     VStack(alignment: .leading) {
                                         Text("Expense")
                                             .font(.system(size: 15))
-                                            .foregroundColor(.mainText)
+                                            .foregroundColor(.white)
                                         Text("Rp\(transactionViewModel.totalExpense.formatted(FloatingPointFormatStyle()))")
                                             .font(.system(size: 15))
                                             .bold()
-                                            .foregroundColor(.mainText)
+                                            .foregroundColor(.white)
                                             .lineLimit(0)
                                         
                                     }

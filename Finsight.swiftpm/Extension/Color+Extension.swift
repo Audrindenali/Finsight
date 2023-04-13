@@ -9,9 +9,10 @@ import SwiftUI
 
 extension Color {
     static let mainColor = Color("MainColor")
-    static let mainText = Color("MainText")
+    static let white = Color("White")
     static let secondaryText = Color("SecondaryText")
     static let border = Color("Border")
     static let backColor = Color("BackColor")
     static let mainGray = Color("MainGray")
+    static let mainText = Color("MainText")
 }

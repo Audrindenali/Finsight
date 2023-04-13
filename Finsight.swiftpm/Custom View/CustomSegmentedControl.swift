@@ -31,7 +31,7 @@ struct CustomSegmentedControl: View {
                 }
                 .overlay(
                     Text(options[index])
-                        .foregroundColor(preselectedIndex == index ? .mainText : .black)
+                        .foregroundColor(preselectedIndex == index ? .white : .mainText)
                         .font(.system(.body).bold())
                 )
             }

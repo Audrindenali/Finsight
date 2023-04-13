@@ -30,12 +30,12 @@ struct AddTransactionView: View {
                 VStack(alignment: .leading) {
                     Text("How Much?")
                         .font(.system(.title2))
-                        .foregroundColor(.mainText)
+                        .foregroundColor(.white)
                         .bold()
                     
                     TextField("Enter the nominal", text: $amountSelection)
                         .font(.system(.largeTitle).weight(.bold))
-                        .foregroundColor(.mainText)
+                        .foregroundColor(.white)
                         .padding(.bottom, 16)
                     
                     

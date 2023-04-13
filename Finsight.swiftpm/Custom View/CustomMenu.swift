@@ -39,16 +39,16 @@ struct CustomMenu: View {
             HStack {
                 Image(systemName: "chevron.down")
                     .font(.system(.title3))
-                    .foregroundColor(.mainText)
+                    .foregroundColor(.white)
                 
                 Text(selectedMenu == 0 ? placeholderMenu : menus[selectedMenu])
                     .font(.system(.body))
-                    .foregroundColor(.mainText)
+                    .foregroundColor(.white)
             }
             .padding(.all, 10)
             .overlay {
                 Capsule()
-                    .stroke(Color.mainText)
+                    .stroke(Color.white)
             }
         }
     }
