@@ -17,4 +17,6 @@ extension Color {
     static let mainText = Color("MainText")
     static let mainTextInvert = Color("MainTextInvert")
     static let black = Color("Black")
+    static let income = Color("Income")
+    static let expense = Color("Expense")
 }

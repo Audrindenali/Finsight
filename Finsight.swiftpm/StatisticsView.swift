@@ -21,6 +21,8 @@ struct StatisticsView: View {
     
     
     @State private var preselectedIndex: Int = 0
+    @State private var selectedCashFlowSlice: String?
+    @State private var selectedSlicePercent: Double?
     
     var body: some View {
         GeometryReader { screen in
@@ -34,15 +36,50 @@ struct StatisticsView: View {
                         }
                     }.pickerStyle(.menu)
                     
-                    VStack {
-                        CustomPieChartView(dataset: $chartDataset)
+                    ZStack {
+                        VStack {
+                            CustomPieChartView(dataset: $chartDataset, selectedSliceValue: $selectedCashFlowSlice, selectedSlicePercent: $selectedSlicePercent)
+                        }
+                        
+                        VStack {
+                            
+                            if selectedSlicePercent != nil {
+                                Text("\(String(format: "%.2f", selectedSlicePercent!)) %")
+                            }
+                            
+                            if selectedCashFlowSlice == nil {
+                                Text("Total")
+                                    .font(.system(.body))
+                                    .foregroundColor(.black)
+                                    .padding(.bottom, 2)
+                                Text("Rp\((transactionViewModel.totalIncome + transactionViewModel.totalExpense).formatted(FloatingPointFormatStyle()))")
+                                    .font(.system(.title3).bold())
+                                    .foregroundColor(.mainColor)
+                            } else {
+                                Text(selectedCashFlowSlice == CashFlow.income.rawValue ? CashFlow.income.rawValue : CashFlow.expense.rawValue)
+                                    .font(.system(.body))
+                                    .foregroundColor(.black)
+                                    .padding(.bottom, 2)
+                                Text("Rp\(selectedCashFlowSlice == CashFlow.income.rawValue ? transactionViewModel.totalIncome.formatted(FloatingPointFormatStyle()) : transactionViewModel.totalExpense.formatted(FloatingPointFormatStyle()))")
+                                    .font(.system(.title3).bold())
+                                    .foregroundColor(.mainColor)
+                            }
+                            
+                            
+                                
+                        }
+                        .frame(maxWidth: (screen.size.height / 2.5) - 20)
+                        
+                        
                     }
-                    
+                    .background(Color.white)
+                    .cornerRadius(56, corners: [.bottomLeft, .bottomRight])
                     .frame(height: screen.size.height / 2.5)
+                    .padding(.horizontal, 16)
                     
                     CustomSegmentedControl(preselectedIndex: $preselectedIndex, options: (cashFlowType.map{ $0.rawValue }))
                     .padding(.horizontal, 16)
-//                    .padding(.top, )
+                    .padding(.top, 16)
                     
                     ScrollView(showsIndicators: false) {
                         ForEach(transactionViewModel.totalAllCategory, id: \.category){ total in
@@ -53,6 +90,7 @@ struct StatisticsView: View {
                                         .foregroundColor(.mainColor)
                                     Text(total.category.rawValue)
                                         .font(.system(.body).bold())
+                                        .foregroundColor(.black)
                                     Spacer()
                                     Text("Rp\(total.total.formatted(FloatingPointFormatStyle()))")
                                         .font(.system(.body).bold())

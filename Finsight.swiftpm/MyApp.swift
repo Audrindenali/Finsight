@@ -10,6 +10,7 @@ struct MyApp: App {
             NavigationView {
                 MainView()
             }.environmentObject(transactionViewModel)
+                .tint(.white)
         }
     }
 }
