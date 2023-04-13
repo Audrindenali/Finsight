@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Charts
 
 struct StatisticsView: View {
     @EnvironmentObject var transactionViewModel: TransactionViewModel
@@ -14,6 +15,9 @@ struct StatisticsView: View {
     
     let cashFlowType = CashFlow.allCases
     @State private var cashFlowSelection = CashFlow.expense.rawValue
+    
+//    @State private var chartDataEntries: [PieChartDataEntry] = []
+    @State private var chartDataset: PieChartDataSet? = nil
     
     
     @State private var preselectedIndex: Int = 0
@@ -31,13 +35,14 @@ struct StatisticsView: View {
                     }.pickerStyle(.menu)
                     
                     VStack {
-                        Color.blue
+                        CustomPieChartView(dataset: $chartDataset)
                     }
-                    .frame(height: screen.size.height / 3)
+                    
+                    .frame(height: screen.size.height / 2.5)
                     
                     CustomSegmentedControl(preselectedIndex: $preselectedIndex, options: (cashFlowType.map{ $0.rawValue }))
                     .padding(.horizontal, 16)
-                    .padding(.top, 32)
+//                    .padding(.top, )
                     
                     ScrollView(showsIndicators: false) {
                         ForEach(transactionViewModel.totalAllCategory, id: \.category){ total in
@@ -79,6 +84,28 @@ struct StatisticsView: View {
                 } else {
                     print("expense")
                 }
+                
+                if transactionViewModel.totalIncome + transactionViewModel.totalExpense == 0 {
+                    let entries = [
+                        PieChartDataEntry(value: 0, label: "Income"),
+                        PieChartDataEntry(value: 0, label: "Expense")
+                    ]
+                    
+                    let dataset = PieChartDataSet(entries: entries)
+                    chartDataset = dataset
+                    
+                } else {
+                    let total = transactionViewModel.totalExpense + transactionViewModel.totalIncome
+                    let entries = [
+                        PieChartDataEntry(value: ((transactionViewModel.totalIncome/total) * 100), label: "Income"),
+                        PieChartDataEntry(value: ((transactionViewModel.totalExpense/total) * 100), label: "Expense")
+                    ]
+                    
+                    let dataset = PieChartDataSet(entries: entries)
+                    chartDataset = dataset
+                }
+                
+                
             }
             .onChange(of: preselectedIndex) { newIdx in
                 transactionViewModel.fetchTotalTransactionByCashFlow(cashFlow: cashFlowType[newIdx])
