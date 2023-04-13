@@ -15,4 +15,6 @@ extension Color {
     static let backColor = Color("BackColor")
     static let mainGray = Color("MainGray")
     static let mainText = Color("MainText")
+    static let mainTextInvert = Color("MainTextInvert")
+    static let black = Color("Black")
 }

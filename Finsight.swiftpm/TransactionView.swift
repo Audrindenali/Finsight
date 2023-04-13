@@ -50,7 +50,7 @@ struct TransactionView: View {
                 
                 ScrollView {
                     ForEach(transactionViewModel.transactions, id: \._id){ transaction in
-                        ItemMainTransaction(category: transaction.tr_category, description: transaction.tr_description, amount: "\(transaction.tr_amount)", date: "10:00 AM")
+                        ItemMainTransaction(category: transaction.tr_category, description: transaction.tr_description, amount: "\(transaction.tr_amount.formatted(FloatingPointFormatStyle()))", date: getTimeTransaction(date: transaction.tr_date), cashFlow: transaction.tr_cashflow)
                             .padding(.horizontal, 16)
                             .padding(.top, 8)
                         
@@ -68,6 +68,15 @@ struct TransactionView: View {
         .onChange(of: categoryFilterSelected) { categoryNum in
             transactionViewModel.fetchTransactionByFilter(monthNum: monthFilterSelected, category: categories[categoryNum])
         }
+    }
+    
+    private func getTimeTransaction(date: Date) -> String{
+        let formatter = DateFormatter()
+        formatter.dateFormat = "h:mm a"
+        formatter.amSymbol = "AM"
+        formatter.pmSymbol = "PM"
+        
+        return formatter.string(from: date)
     }
 }
 
