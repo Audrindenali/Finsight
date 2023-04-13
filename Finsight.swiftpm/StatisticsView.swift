@@ -10,7 +10,7 @@ import Charts
 
 struct StatisticsView: View {
     @EnvironmentObject var transactionViewModel: TransactionViewModel
-    @State private var durationSelection = "Month"
+    @State private var monthFilterSelected = 0
     let duration = ["Today", "Week", "Month", "Year"]
     
     let cashFlowType = CashFlow.allCases
@@ -23,6 +23,21 @@ struct StatisticsView: View {
     @State private var preselectedIndex: Int = 0
     @State private var selectedCashFlowSlice: String?
     @State private var selectedSlicePercent: Double?
+    var months = [
+        "All",
+        "Januari",
+        "Februari",
+        "Maret",
+        "April",
+        "Mei",
+        "Juni",
+        "Juli",
+        "Agustus",
+        "September",
+        "Oktober",
+        "November",
+        "Desember"
+    ]
     
     var body: some View {
         GeometryReader { screen in
@@ -30,11 +45,9 @@ struct StatisticsView: View {
                 Color.mainColor
                     .ignoresSafeArea()
                 VStack {
-                    Picker("Select Category", selection: $durationSelection) {
-                        ForEach(duration, id: \.self) {
-                            Text($0)
-                        }
-                    }.pickerStyle(.menu)
+                    CustomMenu(menus: months, selectedMenu: $monthFilterSelected, placeholderMenu: "Month")
+                    .padding(.leading, 16)
+                    .padding(.vertical, 16)
                     
                     ZStack {
                         VStack {
@@ -97,10 +110,18 @@ struct StatisticsView: View {
                                         .foregroundColor(.mainColor)
                                 }
                                 
-                                ProgressView(value: total.total, total: cashFlowSelection == CashFlow.expense.rawValue ? transactionViewModel.totalExpense : transactionViewModel.totalIncome)
-                                    .scaleEffect(x: 1, y: 3, anchor: .center)
-                                    .tint(.mainColor)
-//                                    .cornerRadius(16)
+                                if (transactionViewModel.totalIncome == 0 && cashFlowSelection == CashFlow.income.rawValue) || (transactionViewModel.totalExpense == 0 && cashFlowSelection == CashFlow.expense.rawValue){
+                                    ProgressView(value: total.total, total : 1)
+                                        .scaleEffect(x: 1, y: 3, anchor: .center)
+                                        .tint(.mainColor)
+                                } else {
+                                    ProgressView(value: total.total, total: cashFlowSelection == CashFlow.expense.rawValue ? transactionViewModel.totalExpense : transactionViewModel.totalIncome)
+                                        .scaleEffect(x: 1, y: 3, anchor: .center)
+                                        .tint(.mainColor)
+    //                                    .cornerRadius(16)
+                                }
+                                
+
                             }
                             .padding()
                         }
@@ -116,6 +137,9 @@ struct StatisticsView: View {
             .onAppear {
                 transactionViewModel.fetchTotalTransactionByCashFlow(cashFlow: cashFlowType[preselectedIndex])
                 transactionViewModel.fetchTotalStats()
+                
+                print(transactionViewModel.totalIncome)
+                print(cashFlowSelection)
                 
                 if(cashFlowSelection == CashFlow.income.rawValue){
                     print("income")
@@ -146,6 +170,8 @@ struct StatisticsView: View {
                 
             }
             .onChange(of: preselectedIndex) { newIdx in
+                cashFlowSelection = cashFlowType[newIdx].rawValue
+                
                 transactionViewModel.fetchTotalTransactionByCashFlow(cashFlow: cashFlowType[newIdx])
                 
                 transactionViewModel.fetchTotalStats()
