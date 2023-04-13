@@ -26,27 +26,15 @@ struct MainView: View {
             TabView(selection: $selectedTab) {
                 HomeView()
                     .tag("home")
-//                    .tabItem {
-//                        Label("Home", systemImage: "house.fill")
-//                    }
                 
                 TransactionView()
                     .tag("transaction")
-//                    .tabItem {
-//                        Label("Transaction", systemImage: "arrow.left.arrow.right")
-//                    }
                 
                 StatisticsView()
                     .tag("statistics")
-//                    .tabItem {
-//                        Label("Add", systemImage: "plus")
-//                    }
                 
                 ProfileView()
                     .tag("profile")
-//                    .tabItem {
-//                        Label("Profile", systemImage: "person.fill")
-//                    }
             }
             
             CustomTabBar(selectedTab: $selectedTab, showAddTransaction: $showAddTransaction)

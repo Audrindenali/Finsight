@@ -34,7 +34,7 @@ struct ItemTransactionHome: View {
                 .font(.body)
         }
         .padding(.all, 8)
-        .background(.gray.opacity(0.1))
+        .background(Color.mainGray.opacity(0.2))
         .clipShape(RoundedRectangle(cornerRadius: 8))
         
     }

@@ -12,4 +12,6 @@ extension Color {
     static let mainText = Color("MainText")
     static let secondaryText = Color("SecondaryText")
     static let border = Color("Border")
+    static let backColor = Color("BackColor")
+    static let mainGray = Color("MainGray")
 }

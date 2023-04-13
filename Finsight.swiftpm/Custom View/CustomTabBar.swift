@@ -42,7 +42,7 @@ struct CustomTabBar: View {
         //decreasing padding added
         .padding(.vertical, -10)
         .padding(.bottom, getSafeArea().bottom == 0 ? 15 : getSafeArea().bottom)
-        .background(Color.white)
+        .background(Color.backColor)
     }
 }
 
@@ -66,11 +66,11 @@ struct TabBarButton: View {
                     .renderingMode(.template)
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 28, height: 28)
-                    .foregroundColor(selectedTab == tag ? Color.mainColor : Color.gray.opacity(0.5))
+                    .foregroundColor(selectedTab == tag ? Color.mainColor : Color.mainGray.opacity(0.7))
                 
                 Text(title)
                     .font(.footnote)
-                    .foregroundColor(selectedTab == tag ? Color.mainColor : Color.gray.opacity(0.5))
+                    .foregroundColor(selectedTab == tag ? Color.mainColor : Color.mainGray.opacity(0.7))
                     .padding(.bottom, 5)
                 
                 if selectedTab == tag {

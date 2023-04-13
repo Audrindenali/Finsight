@@ -39,7 +39,8 @@ struct CustomSegmentedControl: View {
         .frame(height: 40)
         .overlay {
             Capsule()
-                .stroke(Color.black)
+                .stroke(Color.mainGray.opacity(0.5), lineWidth: 2)
+
     
         }
     }
