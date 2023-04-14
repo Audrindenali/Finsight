@@ -13,21 +13,7 @@ struct TransactionView: View {
     @State var monthFilterSelected = 0
     @State var categoryFilterSelected = 0
     
-    var months = [
-        "All",
-        "Januari",
-        "Februari",
-        "Maret",
-        "April",
-        "Mei",
-        "Juni",
-        "Juli",
-        "Agustus",
-        "September",
-        "Oktober",
-        "November",
-        "Desember"
-    ]
+    var months = Months.allCases.map { $0.rawValue }
     
     let categories = Categories.allCases.map { $0.rawValue }
     

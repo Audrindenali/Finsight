@@ -33,7 +33,7 @@ struct AddTransactionView: View {
                         .foregroundColor(.white)
                         .bold()
                     
-                    TextField("Enter the nominal", text: $amountSelection)
+                    TextField("Enter the amount", text: $amountSelection)
                         .font(.system(.largeTitle).weight(.bold))
                         .foregroundColor(.white)
                         .padding(.bottom, 16)
@@ -74,6 +74,7 @@ struct AddTransactionView: View {
                         TextField("Description", text: $descriptionSelection)
                             .font(.system(.title3))
                             .padding(.all, 16)
+                            .foregroundColor(.black)
                             
                             .overlay {
                                 RoundedRectangle(cornerRadius: 16)
@@ -110,6 +111,7 @@ struct AddTransactionView: View {
                         
                         
                         DatePicker("Select your date", selection: $dateSelection, displayedComponents: .date)
+                            .preferredColorScheme(.light)
                             .font(.system(.title3))
                             .padding(.all, 16)
                             

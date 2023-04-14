@@ -23,21 +23,7 @@ struct StatisticsView: View {
     @State private var preselectedIndex: Int = 0
     @State private var selectedCashFlowSlice: String?
     @State private var selectedSlicePercent: Double?
-    var months = [
-        "All",
-        "Januari",
-        "Februari",
-        "Maret",
-        "April",
-        "Mei",
-        "Juni",
-        "Juli",
-        "Agustus",
-        "September",
-        "Oktober",
-        "November",
-        "Desember"
-    ]
+    var months = Months.allCases.map { $0.rawValue }
     
     var body: some View {
         GeometryReader { screen in
