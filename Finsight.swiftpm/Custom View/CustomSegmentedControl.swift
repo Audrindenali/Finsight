@@ -14,7 +14,7 @@ struct CustomSegmentedControl: View {
     
     var selectedBackgroundColor = Color.mainColor
     var selectedTextColor = Color.white
-    var textColor = Color.mainText
+    var textColor = Color.black
     var backgroundColor = Color.clear
     var borderColor = Color.mainGray.opacity(0.5)
     var paddingSize: CGFloat = 0

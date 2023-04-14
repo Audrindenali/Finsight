@@ -48,14 +48,28 @@ struct TransactionView: View {
                     }
                 }
                 
-                ScrollView {
-                    ForEach(transactionViewModel.transactions, id: \._id){ transaction in
-                        ItemMainTransaction(category: transaction.tr_category, description: transaction.tr_description, amount: "\(transaction.tr_amount.formatted(FloatingPointFormatStyle()))", date: getTimeTransaction(date: transaction.tr_date), cashFlow: transaction.tr_cashflow)
-                            .padding(.horizontal, 16)
-                            .padding(.top, 8)
+                if transactionViewModel.transactions.isEmpty {
+                    Spacer()
+                    
+                    Text("There isn't data found")
+                        .foregroundColor(.white)
+                        .font(.system(.title3).bold())
+                        .multilineTextAlignment(.center)
                         
+                    
+                    Spacer()
+                } else {
+                    ScrollView {
+                        ForEach(transactionViewModel.transactions, id: \._id){ transaction in
+                            ItemMainTransaction(category: transaction.tr_category, description: transaction.tr_description, amount: "\(transaction.tr_amount.formatted(FloatingPointFormatStyle()))", date: getTimeTransaction(date: transaction.tr_date), cashFlow: transaction.tr_cashflow)
+                                .padding(.horizontal, 16)
+                                .padding(.top, 8)
+                            
+                        }
                     }
                 }
+                
+                
             }
         }
         .onAppear{

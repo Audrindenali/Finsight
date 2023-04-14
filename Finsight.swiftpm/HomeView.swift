@@ -141,13 +141,26 @@ struct HomeView: View {
                 }
                 .padding(16)
                 
-                ScrollView {
-                    ForEach(transactionViewModel.transactions, id: \._id){ transaction in
-                        ItemTransactionHome(cashFlowType: transaction.tr_cashflow, category: transaction.tr_category, amount: "\(transaction.tr_amount)")
-                            .padding(.horizontal, 16)
-                            .padding(.top, 8)
+                if transactionViewModel.transactions.isEmpty {
+                    Spacer()
+                    
+                    Text("There isn't data found")
+                        .foregroundColor(.mainText)
+                        .font(.system(.title3).bold())
+                        .multilineTextAlignment(.center)
+                    
+                    Spacer()
+                } else {
+                    ScrollView {
+                        ForEach(transactionViewModel.transactions, id: \._id){ transaction in
+                            ItemTransactionHome(cashFlowType: transaction.tr_cashflow, category: transaction.tr_category, amount: "\(transaction.tr_amount)")
+                                .padding(.horizontal, 16)
+                                .padding(.top, 8)
+                        }
                     }
                 }
+                
+                
             }
             .onAppear{
                 transactionViewModel.fetchTransactionByPeriod(periodFilter: PeriodFilter(rawValue: durationType[preselectedIndex]) ?? .all)
