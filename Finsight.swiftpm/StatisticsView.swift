@@ -90,7 +90,7 @@ struct StatisticsView: View {
                     .frame(height: screen.size.height / 2.5)
                     .padding(.horizontal, 16)
                     
-                    CustomSegmentedControl(preselectedIndex: $preselectedIndex, options: (cashFlowType.map{ $0.rawValue }))
+                    CustomSegmentedControl(preselectedIndex: $preselectedIndex, options: (cashFlowType.map{ $0.rawValue }), selectedBackgroundColor: .expense, selectedTextColor: .white, textColor: .black, backgroundColor: .white, paddingSize: 4, heightSize: 55)
                     .padding(.horizontal, 16)
                     .padding(.top, 16)
                     
