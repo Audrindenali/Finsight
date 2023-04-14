@@ -25,11 +25,8 @@ struct HomeView: View {
                     VStack {
                         HStack {
                             VStack(alignment: .leading) {
-                                Text("Monday,")
-                                    .font(.system(.body))
-                                    .foregroundColor(.white)
-                                Text("3 April 2023")
-                                    .font(.system(.body))
+                                Text(getTimeUser(date:Date()))
+                                    .font(.system(.body).bold())
                                     .foregroundColor(.white)
                             }
                             
@@ -167,6 +164,13 @@ struct HomeView: View {
                 transactionViewModel.fetchTotalStats(monthNum: 0)
             }
         }
+    }
+    
+    private func getTimeUser(date: Date) -> String{
+        let formatter = DateFormatter()
+        formatter.dateFormat = "EEEE, \nd MMMM y"
+        
+        return formatter.string(from: date)
     }
     
 }

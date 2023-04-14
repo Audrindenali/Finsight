@@ -27,10 +27,11 @@ struct CustomTabBar: View {
                     .padding()
                     .background(Color.mainColor)
                     .clipShape(Circle())
-                    .shadow(color: Color.black.opacity(0.05), radius: 5, x: 5, y:5)
-                    .shadow(color: Color.black.opacity(0.05), radius: 5, x: -5, y:-5)
+                    
             }
-            .offset(y: -30)
+            .offset(y: -40)
+            .shadow(color: Color.gray.opacity(0.4), radius: 2, x: 2, y:2)
+            .shadow(color: Color.gray.opacity(0.4), radius: 2, x: -2, y:-2)
             
             
             TabBarButton(animation: animation, title: "Statistics", image: "chart.pie.fill", tag: "statistics", selectedTab: $selectedTab)
