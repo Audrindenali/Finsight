@@ -13,6 +13,7 @@ struct HomeView: View {
     @State private var durationSelection = "Today"
     let durationType = PeriodFilter.allCases.map{ $0.rawValue }
     @State var preselectedIndex = 0
+    @State var showAllTransaction = false
     
     var body: some View {
         GeometryReader { screen in
@@ -135,8 +136,16 @@ struct HomeView: View {
                 
                 HStack {
                     Text("Recent Transaction")
+                        .font(.system(.body))
                     Spacer()
                     Text("View All")
+                        .font(.system(.body))
+                        .onTapGesture {
+                            showAllTransaction = true
+                        }
+                        .sheet(isPresented: $showAllTransaction, content: {
+                            TransactionView()
+                        })
                         
                 }
                 .padding(16)
