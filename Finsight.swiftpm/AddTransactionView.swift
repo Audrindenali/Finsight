@@ -37,6 +37,7 @@ struct AddTransactionView: View {
                         .font(.system(.largeTitle).weight(.bold))
                         .foregroundColor(.white)
                         .padding(.bottom, 16)
+                        .keyboardType(.numberPad)
                     
                     
                     VStack {
@@ -85,9 +86,7 @@ struct AddTransactionView: View {
                         
                         HStack(spacing: 16) {
                             Button {
-                                withAnimation {
-                                    isIncome = true
-                                }
+                                
                             } label: {
                                 Text(CashFlow.income.rawValue)
                                     .foregroundColor(.white)
@@ -97,8 +96,9 @@ struct AddTransactionView: View {
                             .clipShape(RoundedRectangle(cornerRadius: 18))
                             
                             
+                            
                             Button {
-                                isIncome = false
+                                
                             } label: {
                                 Text(CashFlow.expense.rawValue)
                                     .foregroundColor(.white)
@@ -153,6 +153,16 @@ struct AddTransactionView: View {
                 .ignoresSafeArea(edges: .bottom)
                 .padding(.all, 16)
             } .ignoresSafeArea(edges: .bottom)
+        }.onChange(of: categorySelection) { newIdx in
+            let category = Categories(rawValue: categories[newIdx])
+            switch(category){
+            case .salary, .bonus :
+                isIncome = true
+            case .all, .entertainment, .food, .shopping, .subscription:
+                isIncome = false
+            case .none:
+                break
+            }
         }
     }
     
