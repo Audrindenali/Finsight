@@ -46,6 +46,8 @@ struct CustomPieChartView: UIViewRepresentable {
         uiView.entryLabelFont = .systemFont(ofSize: 12, weight: .light)
         uiView.holeColor = UIColor(Color.white)
         
+        uiView.notifyDataSetChanged()
+        
     }
     
     class Coordinator: NSObject, ChartViewDelegate {

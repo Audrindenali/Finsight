@@ -135,47 +135,52 @@ struct StatisticsView: View {
                 }
             }
             .onAppear {
-                transactionViewModel.fetchTotalTransactionByCashFlow(cashFlow: cashFlowType[preselectedIndex])
-                transactionViewModel.fetchTotalStats()
+                transactionViewModel.fetchTotalTransactionByCashFlow(cashFlow: cashFlowType[preselectedIndex], monthNum: monthFilterSelected)
+                transactionViewModel.fetchTotalStats(monthNum: 0)
                 
-                print(transactionViewModel.totalIncome)
-                print(cashFlowSelection)
-                
-                if(cashFlowSelection == CashFlow.income.rawValue){
-                    print("income")
-                } else {
-                    print("expense")
-                }
-                
-                if transactionViewModel.totalIncome + transactionViewModel.totalExpense == 0 {
-                    let entries = [
-                        PieChartDataEntry(value: 0, label: "Income"),
-                        PieChartDataEntry(value: 0, label: "Expense")
-                    ]
-                    
-                    let dataset = PieChartDataSet(entries: entries)
-                    chartDataset = dataset
-                    
-                } else {
-                    let total = transactionViewModel.totalExpense + transactionViewModel.totalIncome
-                    let entries = [
-                        PieChartDataEntry(value: ((transactionViewModel.totalIncome/total) * 100), label: "Income"),
-                        PieChartDataEntry(value: ((transactionViewModel.totalExpense/total) * 100), label: "Expense")
-                    ]
-                    
-                    let dataset = PieChartDataSet(entries: entries)
-                    chartDataset = dataset
-                }
-                
+                prepareTransactionDataset(monthNum: monthFilterSelected)
                 
             }
             .onChange(of: preselectedIndex) { newIdx in
                 cashFlowSelection = cashFlowType[newIdx].rawValue
                 
-                transactionViewModel.fetchTotalTransactionByCashFlow(cashFlow: cashFlowType[newIdx])
+                transactionViewModel.fetchTotalTransactionByCashFlow(cashFlow: cashFlowType[newIdx], monthNum: monthFilterSelected)
                 
-                transactionViewModel.fetchTotalStats()
+                transactionViewModel.fetchTotalStats(monthNum: monthFilterSelected)
+                
+                prepareTransactionDataset(monthNum: monthFilterSelected)
             }
+            .onChange(of: monthFilterSelected) { monthNum in
+                transactionViewModel.fetchTotalTransactionByCashFlow(cashFlow: cashFlowType[preselectedIndex], monthNum: monthNum)
+                
+                transactionViewModel.fetchTotalStats(monthNum: monthFilterSelected)
+                
+                prepareTransactionDataset(monthNum: monthFilterSelected)
+            }
+        }
+    }
+    
+    
+    private func prepareTransactionDataset(monthNum: Int){
+        transactionViewModel.fetchTotalStats(monthNum: monthNum)
+        if transactionViewModel.totalIncome + transactionViewModel.totalExpense == 0 {
+            let entries = [
+                PieChartDataEntry(value: 0, label: "Income"),
+                PieChartDataEntry(value: 0, label: "Expense")
+            ]
+            
+            let dataset = PieChartDataSet(entries: entries)
+            chartDataset = dataset
+            
+        } else {
+            let total = transactionViewModel.totalExpense + transactionViewModel.totalIncome
+            let entries = [
+                PieChartDataEntry(value: ((transactionViewModel.totalIncome/total) * 100), label: "Income"),
+                PieChartDataEntry(value: ((transactionViewModel.totalExpense/total) * 100), label: "Expense")
+            ]
+            
+            let dataset = PieChartDataSet(entries: entries)
+            chartDataset = dataset
         }
     }
 }

@@ -155,7 +155,7 @@ struct HomeView: View {
             .onAppear{
                 transactionViewModel.fetchTransactionByPeriod(periodFilter: PeriodFilter(rawValue: durationType[preselectedIndex]) ?? .all)
                 
-                transactionViewModel.fetchTotalStats()
+                transactionViewModel.fetchTotalStats(monthNum: 0)
                 
                 let currentDate = Date()
                 let calendar = Calendar.current
@@ -164,7 +164,7 @@ struct HomeView: View {
             }
             .onChange(of: preselectedIndex) { newIndex in
                 transactionViewModel.fetchTransactionByPeriod(periodFilter: PeriodFilter(rawValue: durationType[newIndex]) ?? .all)
-                transactionViewModel.fetchTotalStats()
+                transactionViewModel.fetchTotalStats(monthNum: 0)
             }
         }
     }

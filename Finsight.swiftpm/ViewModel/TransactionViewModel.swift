@@ -15,7 +15,7 @@ class TransactionViewModel: ObservableObject {
     @Published var totalAllCategory: [TotalCategory] = []
     
     
-    func fetchTotalTransactionByCashFlow(cashFlow: CashFlow){
+    func fetchTotalTransactionByCashFlow(cashFlow: CashFlow, monthNum: Int){
         
         var categories: [Categories]? = nil
         
@@ -32,7 +32,7 @@ class TransactionViewModel: ObservableObject {
             
             for category in categories {
                 totalAllCategory.append(
-                    TotalCategory(category: category, total: DatabaseManager.shared.readTotalTransactionByCategory(category: category))
+                    TotalCategory(category: category, total: DatabaseManager.shared.readTotalTransactionByCategory(category: category, monthNum: monthNum))
                 )
                 
                 totalAllCategory = totalAllCategory.sorted { $0.total > $1.total }
@@ -55,9 +55,9 @@ class TransactionViewModel: ObservableObject {
         transactions = DatabaseManager.shared.readTransactionByPeriod(periodFilter: periodFilter)
     }
     
-    func fetchTotalStats(){
-        totalIncome = DatabaseManager.shared.readTotal(cashflow: .income)
-        totalExpense = DatabaseManager.shared.readTotal(cashflow: .expense)
+    func fetchTotalStats(monthNum: Int){
+        totalIncome = DatabaseManager.shared.readTotal(cashflow: .income, monthNum: monthNum)
+        totalExpense = DatabaseManager.shared.readTotal(cashflow: .expense, monthNum: monthNum)
             totalBalance = totalIncome - totalExpense
         
     }

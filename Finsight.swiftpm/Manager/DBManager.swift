@@ -37,7 +37,7 @@ class DatabaseManager {
         }
     }
     
-    func readTotalTransactionByCategory(category: Categories) -> Double {
+    func readTotalTransactionByCategory(category: Categories, monthNum: Int) -> Double {
         let realm = try! Realm()
         
         let dataTransaction = realm.objects(TransactionEntity.self)
@@ -49,8 +49,32 @@ class DatabaseManager {
             return 0
         }
         
+        let currentDate = Date()
+        let calendar = Calendar.current
+        let year = calendar.component(.year, from: currentDate)
+        let month = calendar.component(.month, from: currentDate)
         
-        if let startDate = Date().startOfMonth(), let endDate = Date().endOfMonth() {
+        var startDate: Date? = nil
+        var endDate: Date? = nil
+        
+        if monthNum == 0  {
+            startDate = Date().startOfMonth()
+            endDate = Date().endOfMonth()
+        } else {
+            if monthNum > month {
+                startDate = createDate(day: 1, month: monthNum, year: (year - 1))
+                
+                endDate = Calendar.current.date(byAdding: .day, value: -1,
+                                                to:  createDate(day: 1, month: monthNum + 1, year: (year - 1))!)
+            } else {
+                startDate = createDate(day: 1, month: monthNum, year: (year))
+                
+                endDate = Calendar.current.date(byAdding: .day, value: -1,
+                                                to:  createDate(day: 1, month: monthNum + 1, year: (year))!)
+            }
+        }
+        
+        if let startDate = startDate, let endDate = endDate {
             let dataFiltered: Double = dataTransaction.where {
                 ($0.tr_category == category.rawValue) &&
                 ($0.tr_date.contains(startDate...endDate))
@@ -146,7 +170,7 @@ class DatabaseManager {
         }
     }
     
-    func readTotal(cashflow: CashFlow) -> Double {
+    func readTotal(cashflow: CashFlow, monthNum: Int) -> Double {
         let realm = try! Realm()
         
         let dataTransaction = realm.objects(TransactionEntity.self)
@@ -163,7 +187,34 @@ class DatabaseManager {
                 cashflowType = CashFlow.expense.rawValue
         }
         
-        if let cashflowType = cashflowType, let startDate = Date().startOfMonth(), let endDate = Date().endOfMonth() {
+        
+        var startDate: Date? = nil
+        var endDate: Date? = nil
+        
+        let currentDate = Date()
+        let calendar = Calendar.current
+        let year = calendar.component(.year, from: currentDate)
+        let month = calendar.component(.month, from: currentDate)
+        
+        if monthNum == 0  {
+            startDate = Date().startOfMonth()
+            endDate = Date().endOfMonth()
+        } else {
+            if monthNum > month {
+                startDate = createDate(day: 1, month: monthNum, year: (year - 1))
+                
+                endDate = Calendar.current.date(byAdding: .day, value: -1,
+                                                to:  createDate(day: 1, month: monthNum + 1, year: (year - 1))!)
+            } else {
+                startDate = createDate(day: 1, month: monthNum, year: (year))
+                
+                endDate = Calendar.current.date(byAdding: .day, value: -1,
+                                                to:  createDate(day: 1, month: monthNum + 1, year: (year))!)
+            }
+        }
+        
+        
+        if let cashflowType = cashflowType, let startDate = startDate, let endDate = endDate {
             let dataFiltered: Double = dataTransaction.where {
                 ($0.tr_cashflow == cashflowType) &&
                 ($0.tr_date.contains(startDate...endDate))
