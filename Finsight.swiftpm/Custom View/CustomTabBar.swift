@@ -19,7 +19,7 @@ struct CustomTabBar: View {
             TabBarButton(animation: animation, title: "Home", image: "house.fill", tag: "home", selectedTab: $selectedTab)
             
             TabBarButton(animation: animation, title: "Transaction", image: "arrow.left.arrow.right", tag: "transaction", selectedTab: $selectedTab)
-        
+            
             NavigationLink(destination: AddTransactionView(),isActive: $showAddTransaction) {
                 Image(systemName: "plus")
                     .font(.title2)
@@ -27,7 +27,7 @@ struct CustomTabBar: View {
                     .padding()
                     .background(Color.mainColor)
                     .clipShape(Circle())
-                    
+                
             }
             .offset(y: -40)
             .shadow(color: Color.gray.opacity(0.4), radius: 2, x: 2, y:2)
@@ -77,7 +77,7 @@ struct TabBarButton: View {
                 if selectedTab == tag {
                     Circle()
                         .fill(Color.mainColor)
-                        //Sliding Effect
+                    //Sliding Effect
                         .matchedGeometryEffect(id: "TAB", in: animation)
                         .frame(width: 8, height: 8)
                 }

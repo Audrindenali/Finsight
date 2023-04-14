@@ -16,7 +16,7 @@ struct WelcomeView: View {
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .frame(maxHeight: screen.size.height / 2)
-                    
+                
                 Spacer()
                 
                 Text("Simple solution for your budget.")
@@ -40,7 +40,7 @@ struct WelcomeView: View {
                             .padding(.horizontal, (50))
                             .padding(.vertical, 5)
                     }
-
+                    
                     .buttonStyle(.borderedProminent)
                     .tint(.mainColor)
                     .clipShape(RoundedRectangle(cornerRadius: 4))

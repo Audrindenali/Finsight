@@ -9,7 +9,7 @@ import SwiftUI
 import Charts
 
 struct CustomPieChartView: UIViewRepresentable {
-//    @Binding var entries: [PieChartDataEntry]
+    //    @Binding var entries: [PieChartDataEntry]
     @Binding var dataset: PieChartDataSet?
     @Binding var selectedSliceValue: String?
     @Binding var selectedSlicePercent: Double?
@@ -23,13 +23,13 @@ struct CustomPieChartView: UIViewRepresentable {
     
     func updateUIView(_ uiView: Charts.PieChartView, context: Context) {
         
-//        let dataset = PieChartDataSet(entries: entries)
+        //        let dataset = PieChartDataSet(entries: entries)
         
         guard let dataset = dataset else { return }
         
         dataset.colors = [
-           UIColor(Color.income),
-           UIColor(Color.expense)
+            UIColor(Color.income),
+            UIColor(Color.expense)
         ]
         
         
@@ -57,7 +57,7 @@ struct CustomPieChartView: UIViewRepresentable {
         }
         
         func chartValueSelected(_ chartView: ChartViewBase, entry: ChartDataEntry, highlight: Highlight) {
-
+            
             guard let dataset = parent.dataset else { return }
             
             if entry.y == dataset[0].y {

@@ -27,15 +27,15 @@ struct CustomSegmentedControl: View {
                     Rectangle()
                         .fill(.clear)
                     
-                        
+                    
                     Capsule()
                         .fill(selectedBackgroundColor)
                         .opacity(preselectedIndex == index ? 1 : 0.01)
                         .onTapGesture {
                             withAnimation(.linear) {
-                                    preselectedIndex = index
-                                }
+                                preselectedIndex = index
                             }
+                        }
                 }
                 .overlay(
                     Text(options[index])

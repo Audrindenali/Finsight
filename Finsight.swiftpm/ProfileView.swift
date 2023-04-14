@@ -31,7 +31,7 @@ struct ProfileView: View {
                     VStack(alignment: .leading) {
                         Text("Username")
                             .foregroundColor(.white)
-                            
+                        
                         Text("Rebecca")
                             .foregroundColor(.white)
                             .font(.system(.title))
@@ -47,7 +47,7 @@ struct ProfileView: View {
                         .padding(12)
                         .foregroundColor(.white)
                         .font(.system(.title).bold())
-//                        .clipShape(RoundedRectangle(cornerRadius: 16))
+                    //                        .clipShape(RoundedRectangle(cornerRadius: 16))
                         .overlay {
                             RoundedRectangle(cornerRadius: 8)
                                 .stroke(Color.white)

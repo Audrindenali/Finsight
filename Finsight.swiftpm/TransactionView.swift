@@ -25,12 +25,12 @@ struct TransactionView: View {
                 ScrollView(.horizontal,showsIndicators: false){
                     HStack {
                         CustomMenu(menus: months, selectedMenu: $monthFilterSelected, placeholderMenu: "Month")
-                        .padding(.leading, 16)
-                        .padding(.vertical, 16)
+                            .padding(.leading, 16)
+                            .padding(.vertical, 16)
                         
                         CustomMenu(menus: categories, selectedMenu: $categoryFilterSelected, placeholderMenu: "Category")
-                        .padding(.leading, 16)
-                        .padding(.vertical, 16)
+                            .padding(.leading, 16)
+                            .padding(.vertical, 16)
                     }
                 }
                 
@@ -41,7 +41,7 @@ struct TransactionView: View {
                         .foregroundColor(.white)
                         .font(.system(.title3).bold())
                         .multilineTextAlignment(.center)
-                        
+                    
                     
                     Spacer()
                 } else {

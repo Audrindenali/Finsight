@@ -127,10 +127,10 @@ struct HomeView: View {
                     }
                 }
                 .frame(height: screen.size.height / 2)
-
+                
                 CustomSegmentedControl(preselectedIndex: $preselectedIndex, options: durationType)
-                .padding(.horizontal, 16)
-                .padding(.top, 32)
+                    .padding(.horizontal, 16)
+                    .padding(.top, 32)
                 
                 
                 
@@ -146,7 +146,7 @@ struct HomeView: View {
                         .sheet(isPresented: $showAllTransaction, content: {
                             TransactionView()
                         })
-                        
+                    
                 }
                 .padding(16)
                 

@@ -16,7 +16,7 @@ struct CustomMenu: View {
     var body: some View {
         Menu {
             ForEach(0..<menus.count, id: \.self){ menuIdx in
-               
+                
                 Button(action: {
                     if menuIdx == selectedMenu {
                         selectedMenu = 0

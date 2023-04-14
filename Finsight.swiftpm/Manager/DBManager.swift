@@ -181,10 +181,10 @@ class DatabaseManager {
         var cashflowType: String? = nil
         
         switch(cashflow){
-            case .income:
-                cashflowType = CashFlow.income.rawValue
-            case .expense:
-                cashflowType = CashFlow.expense.rawValue
+        case .income:
+            cashflowType = CashFlow.income.rawValue
+        case .expense:
+            cashflowType = CashFlow.expense.rawValue
         }
         
         
@@ -233,7 +233,7 @@ class DatabaseManager {
         var endDate: Date?
         
         switch(periodFilter){
-            case .week :
+        case .week :
             startDate = Date().startOfWeek
             endDate = Date().endOfWeek
         case .today:

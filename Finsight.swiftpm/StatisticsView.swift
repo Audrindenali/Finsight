@@ -16,7 +16,7 @@ struct StatisticsView: View {
     let cashFlowType = CashFlow.allCases
     @State private var cashFlowSelection = CashFlow.expense.rawValue
     
-//    @State private var chartDataEntries: [PieChartDataEntry] = []
+    //    @State private var chartDataEntries: [PieChartDataEntry] = []
     @State private var chartDataset: PieChartDataSet? = nil
     
     
@@ -32,8 +32,8 @@ struct StatisticsView: View {
                     .ignoresSafeArea()
                 VStack {
                     CustomMenu(menus: months, selectedMenu: $monthFilterSelected, placeholderMenu: "Month")
-                    .padding(.leading, 16)
-                    .padding(.vertical, 16)
+                        .padding(.leading, 16)
+                        .padding(.vertical, 16)
                     
                     ZStack {
                         VStack {
@@ -65,7 +65,7 @@ struct StatisticsView: View {
                             }
                             
                             
-                                
+                            
                         }
                         .frame(maxWidth: (screen.size.height / 2.5) - 20)
                         
@@ -77,8 +77,8 @@ struct StatisticsView: View {
                     .padding(.horizontal, 16)
                     
                     CustomSegmentedControl(preselectedIndex: $preselectedIndex, options: (cashFlowType.map{ $0.rawValue }), selectedBackgroundColor: .expense, selectedTextColor: .white, textColor: .black, backgroundColor: .white, paddingSize: 4, heightSize: 55)
-                    .padding(.horizontal, 16)
-                    .padding(.top, 16)
+                        .padding(.horizontal, 16)
+                        .padding(.top, 16)
                     
                     ScrollView(showsIndicators: false) {
                         ForEach(transactionViewModel.totalAllCategory, id: \.category){ total in
@@ -104,10 +104,10 @@ struct StatisticsView: View {
                                     ProgressView(value: total.total, total: cashFlowSelection == CashFlow.expense.rawValue ? transactionViewModel.totalExpense : transactionViewModel.totalIncome)
                                         .scaleEffect(x: 1, y: 3, anchor: .center)
                                         .tint(.mainColor)
-    //                                    .cornerRadius(16)
+                                    //                                    .cornerRadius(16)
                                 }
                                 
-
+                                
                             }
                             .padding()
                         }

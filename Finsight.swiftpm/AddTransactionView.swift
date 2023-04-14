@@ -20,7 +20,7 @@ struct AddTransactionView: View {
     @State private var descriptionSelection: String = ""
     @State private var dateSelection = Date.now
     @State private var isIncome = true
-
+    
     
     var body: some View {
         GeometryReader { screen in
@@ -48,10 +48,10 @@ struct AddTransactionView: View {
                                 }
                             } label: {
                                 Text("Category")
-                                .font(.title3)
-                                .foregroundColor(categorySelection == 0 ? .secondaryText : .black)
+                                    .font(.title3)
+                                    .foregroundColor(categorySelection == 0 ? .secondaryText : .black)
                             }
-                                
+                            
                         } label: {
                             HStack {
                                 Text(categorySelection == 0 ? "Select Category" : categories[categorySelection])
@@ -76,13 +76,13 @@ struct AddTransactionView: View {
                             .font(.system(.title3))
                             .padding(.all, 16)
                             .foregroundColor(.black)
-                            
+                        
                             .overlay {
                                 RoundedRectangle(cornerRadius: 16)
                                     .stroke(.black)
                             }
                             .padding(.top, 32)
-                            
+                        
                         
                         HStack(spacing: 16) {
                             Button {
@@ -114,7 +114,7 @@ struct AddTransactionView: View {
                             .preferredColorScheme(.light)
                             .font(.system(.title3))
                             .padding(.all, 16)
-                            
+                        
                             .overlay {
                                 RoundedRectangle(cornerRadius: 16)
                                     .stroke(.black)

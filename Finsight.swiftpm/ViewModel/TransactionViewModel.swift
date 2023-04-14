@@ -20,11 +20,11 @@ class TransactionViewModel: ObservableObject {
         var categories: [Categories]? = nil
         
         switch(cashFlow){
-            case .expense:
-                categories = [.shopping, .food, .entertainment, .subscription]
+        case .expense:
+            categories = [.shopping, .food, .entertainment, .subscription]
             
-            case .income:
-                categories = [.salary, .bonus]
+        case .income:
+            categories = [.salary, .bonus]
         }
         
         if let categories = categories {
@@ -58,7 +58,7 @@ class TransactionViewModel: ObservableObject {
     func fetchTotalStats(monthNum: Int){
         totalIncome = DatabaseManager.shared.readTotal(cashflow: .income, monthNum: monthNum)
         totalExpense = DatabaseManager.shared.readTotal(cashflow: .expense, monthNum: monthNum)
-            totalBalance = totalIncome - totalExpense
+        totalBalance = totalIncome - totalExpense
         
     }
     
