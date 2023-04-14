@@ -112,6 +112,7 @@ struct AddTransactionView: View {
                         
                         DatePicker("Select your date", selection: $dateSelection, displayedComponents: .date)
                             .preferredColorScheme(.light)
+                            .tint(.black)
                             .font(.system(.title3))
                             .padding(.all, 16)
                         

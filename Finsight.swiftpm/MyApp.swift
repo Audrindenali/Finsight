@@ -8,7 +8,7 @@ struct MyApp: App {
     var body: some Scene {
         WindowGroup {
             NavigationView {
-                MainView()
+                WelcomeView()
             }.environmentObject(transactionViewModel)
                 .tint(.white)
         }
