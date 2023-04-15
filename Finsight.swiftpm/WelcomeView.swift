@@ -47,7 +47,9 @@ struct WelcomeView: View {
                     Spacer()
                 }
                 .fullScreenCover(isPresented: $isShowMainView) {
-                    MainView()
+                    NavigationView {
+                        MainView()
+                    }
                 }
             }
         }.ignoresSafeArea(edges: .top)
